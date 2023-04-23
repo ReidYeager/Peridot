@@ -17,61 +17,61 @@ extern "C" {
 #define PERI_DEF_VECTOR_OPERATIONS_21(base, basePrim, alt, altType) \
 inline base base##Add##alt(base _a, altType _b)                     \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x + (basePrim)_b,                                            \
     _a.y + (basePrim)_b };                                          \
   return f;                                                         \
 }                                                                   \
 inline base base##Subtract##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x - (basePrim)_b,                                            \
     _a.y - (basePrim)_b };                                          \
-    return f;                                                         \
+    return f;                                                       \
 }                                                                   \
 inline base base##Multiply##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x * (basePrim)_b,                                            \
     _a.y * (basePrim)_b };                                          \
-    return f;                                                         \
+    return f;                                                       \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x / (basePrim)_b,                                            \
     _a.y / (basePrim)_b };                                          \
-    return f;                                                         \
+    return f;                                                       \
 }
 
 #define PERI_DEF_VECTOR_OPERATIONS_22(base, basePrim, alt, altType) \
 inline base base##Add##alt(base _a, altType _b)                     \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x + (basePrim)_b.x,                                          \
     _a.y + (basePrim)_b.y };                                        \
-    return f;                                                         \
+    return f;                                                       \
 }                                                                   \
 inline base base##Subtract##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x - (basePrim)_b.x,                                          \
     _a.y - (basePrim)_b.y };                                        \
-    return f;                                                         \
+    return f;                                                       \
 }                                                                   \
 inline base base##Multiply##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x * (basePrim)_b.x,                                          \
     _a.y * (basePrim)_b.y };                                        \
-    return f;                                                         \
+    return f;                                                       \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x / (basePrim)_b.x,                                          \
     _a.y / (basePrim)_b.y };                                        \
-    return f;                                                         \
+    return f;                                                       \
 }
 
 #define PERI_DEF_VECTOR_OPERATIONS_23(base, basePrim, alt, altType) \
@@ -80,22 +80,22 @@ PERI_DEF_VECTOR_OPERATIONS_22(base, basePrim, alt, altType)
 #define PERI_DEF_VECTOR_OPERATIONS_24(base, basePrim, alt, altType) \
 PERI_DEF_VECTOR_OPERATIONS_22(base, basePrim, alt, altType)
 
-#define PERI_DEF_OPERATIONS_2(base)                                                  \
-inline float base##Magnitude(base _a)                                                \
-{                                                                                    \
-  return (float)sqrt((_a.x * _a.x) + (_a.y * _a.y));                                 \
-}                                                                                    \
-inline base base##Normalize(base _a)                                                 \
-{                                                                                    \
-  return base##DivideScalarFloat(_a, base##Magnitude(_a));                           \
-}                                                                                    \
-inline float base##Dot(base _a, base _b)                                             \
-{                                                                                    \
-  return (float)((_a.x * _b.x) + (_a.y * _b.y));                                     \
-}                                                                                    \
-inline uint32_t base##Compare(base _a, base _b)                                      \
-{                                                                                    \
-  return ((_a.x == _b.x) && (_a.y == _b.y));                                         \
+#define PERI_DEF_OPERATIONS_2(base)                        \
+inline float base##Magnitude(base _a)                      \
+{                                                          \
+  return (float)sqrt((_a.x * _a.x) + (_a.y * _a.y));       \
+}                                                          \
+inline base base##Normalize(base _a)                       \
+{                                                          \
+  return base##DivideScalarFloat(_a, base##Magnitude(_a)); \
+}                                                          \
+inline float base##Dot(base _a, base _b)                   \
+{                                                          \
+  return (float)((_a.x * _b.x) + (_a.y * _b.y));           \
+}                                                          \
+inline uint32_t base##Compare(base _a, base _b)            \
+{                                                          \
+  return ((_a.x == _b.x) && (_a.y == _b.y));               \
 }
 
 // =====
@@ -105,124 +105,132 @@ inline uint32_t base##Compare(base _a, base _b)                                 
 #define PERI_DEF_VECTOR_OPERATIONS_31(base, basePrim, alt, altType) \
 inline base base##Add##alt(base _a, altType _b)                     \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x + (basePrim)_b,                                            \
     _a.y + (basePrim)_b,                                            \
     _a.z + (basePrim)_b };                                          \
-    return f;                                                         \
+    return f;                                                       \
 }                                                                   \
 inline base base##Subtract##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x - (basePrim)_b,                                            \
     _a.y - (basePrim)_b,                                            \
     _a.z - (basePrim)_b };                                          \
-    return f;                                                         \
+    return f;                                                       \
 }                                                                   \
 inline base base##Multiply##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x * (basePrim)_b,                                            \
     _a.y * (basePrim)_b,                                            \
     _a.z * (basePrim)_b };                                          \
-    return f;                                                         \
+    return f;                                                       \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x / (basePrim)_b,                                            \
     _a.y / (basePrim)_b,                                            \
     _a.z / (basePrim)_b };                                          \
-    return f;                                                         \
+    return f;                                                       \
 }
 
 #define PERI_DEF_VECTOR_OPERATIONS_32(base, basePrim, alt, altType) \
 inline base base##Add##alt(base _a, altType _b)                     \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x + (basePrim)_b.x,                                          \
     _a.y + (basePrim)_b.y,                                          \
     _a.z };                                                         \
-    return f;                                                         \
+    return f;                                                       \
 }                                                                   \
 inline base base##Subtract##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x - (basePrim)_b.x,                                          \
     _a.y - (basePrim)_b.y,                                          \
     _a.z };                                                         \
-    return f;                                                         \
+    return f;                                                       \
 }                                                                   \
 inline base base##Multiply##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x * (basePrim)_b.x,                                          \
     _a.y * (basePrim)_b.y,                                          \
     _a.z };                                                         \
-    return f;                                                         \
+    return f;                                                       \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x / (basePrim)_b.x,                                          \
     _a.y / (basePrim)_b.y,                                          \
     _a.z };                                                         \
-    return f;                                                         \
+    return f;                                                       \
 }
 
 #define PERI_DEF_VECTOR_OPERATIONS_33(base, basePrim, alt, altType) \
 inline base base##Add##alt(base _a, altType _b)                     \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x + (basePrim)_b.x,                                          \
     _a.y + (basePrim)_b.y,                                          \
     _a.z + (basePrim)_b.z };                                        \
-    return f;                                                         \
+    return f;                                                       \
 }                                                                   \
 inline base base##Subtract##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x - (basePrim)_b.x,                                          \
     _a.y - (basePrim)_b.y,                                          \
     _a.z - (basePrim)_b.z };                                        \
-    return f;                                                         \
+    return f;                                                       \
 }                                                                   \
 inline base base##Multiply##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x * (basePrim)_b.x,                                          \
     _a.y * (basePrim)_b.y,                                          \
     _a.z * (basePrim)_b.z };                                        \
-    return f;                                                         \
+    return f;                                                       \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x / (basePrim)_b.x,                                          \
     _a.y / (basePrim)_b.y,                                          \
     _a.z / (basePrim)_b.z };                                        \
-    return f;                                                         \
+    return f;                                                       \
 }
 
 #define PERI_DEF_VECTOR_OPERATIONS_34(base, basePrim, alt, altType) \
 PERI_DEF_VECTOR_OPERATIONS_33(base, basePrim, alt, altType)
 
-#define PERI_DEF_OPERATIONS_3(base)                                                  \
-inline float base##Magnitude(base _a)                                                \
-{                                                                                    \
-  return (float)sqrt((_a.x * _a.x) + (_a.y * _a.y) + (_a.z * _a.z));                 \
-}                                                                                    \
-inline base base##Normalize(base _a)                                                 \
-{                                                                                    \
-  return base##DivideScalarFloat(_a, base##Magnitude(_a));                           \
-}                                                                                    \
-inline float base##Dot(base _a, base _b)                                             \
-{                                                                                    \
-  return (float)((_a.x * _b.x) + (_a.y * _b.y) + (_a.z * _b.z));                     \
-}                                                                                    \
-inline uint32_t base##Compare(base _a, base _b)                                      \
-{                                                                                    \
-  return ((_a.x == _b.x) && (_a.y == _b.y) && (_a.z == _b.z));                       \
+#define PERI_DEF_OPERATIONS_3(base)                                  \
+inline float base##Magnitude(base _a)                                \
+{                                                                    \
+  return (float)sqrt((_a.x * _a.x) + (_a.y * _a.y) + (_a.z * _a.z)); \
+}                                                                    \
+inline base base##Normalize(base _a)                                 \
+{                                                                    \
+  return base##DivideScalarFloat(_a, base##Magnitude(_a));           \
+}                                                                    \
+inline float base##Dot(base _a, base _b)                             \
+{                                                                    \
+  return (float)((_a.x * _b.x) + (_a.y * _b.y) + (_a.z * _b.z));     \
+}                                                                    \
+inline uint32_t base##Compare(base _a, base _b)                      \
+{                                                                    \
+  return ((_a.x == _b.x) && (_a.y == _b.y) && (_a.z == _b.z));       \
+}                                                                    \
+inline base base##Cross(base _a, base _b)                            \
+{                                                                    \
+  base f = {                                                         \
+    _a.y * _b.z - _a.z * _b.y,                                       \
+    _a.z * _b.x - _a.x * _b.z,                                       \
+    _a.x * _b.y - _a.y * _b.x };                                     \
+  return f;                                                          \
 }
 
 // =====
@@ -232,7 +240,7 @@ inline uint32_t base##Compare(base _a, base _b)                                 
 #define PERI_DEF_VECTOR_OPERATIONS_41(base, basePrim, alt, altType) \
 inline base base##Add##alt(base _a, altType _b)                     \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x + (basePrim)_b,                                            \
     _a.y + (basePrim)_b,                                            \
     _a.z + (basePrim)_b,                                            \
@@ -240,7 +248,7 @@ inline base base##Add##alt(base _a, altType _b)                     \
 }                                                                   \
 inline base base##Subtract##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x - (basePrim)_b,                                            \
     _a.y - (basePrim)_b,                                            \
     _a.z - (basePrim)_b,                                            \
@@ -248,7 +256,7 @@ inline base base##Subtract##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Multiply##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x * (basePrim)_b,                                            \
     _a.y * (basePrim)_b,                                            \
     _a.z * (basePrim)_b,                                            \
@@ -256,7 +264,7 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x / (basePrim)_b,                                            \
     _a.y / (basePrim)_b,                                            \
     _a.z / (basePrim)_b,                                            \
@@ -266,7 +274,7 @@ inline base base##Divide##alt(base _a, altType _b)                  \
 #define PERI_DEF_VECTOR_OPERATIONS_42(base, basePrim, alt, altType) \
 inline base base##Add##alt(base _a, altType _b)                     \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x + (basePrim)_b.x,                                          \
     _a.y + (basePrim)_b.y,                                          \
     _a.z,                                                           \
@@ -274,7 +282,7 @@ inline base base##Add##alt(base _a, altType _b)                     \
 }                                                                   \
 inline base base##Subtract##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x - (basePrim)_b.x,                                          \
     _a.y - (basePrim)_b.y,                                          \
     _a.z,                                                           \
@@ -282,7 +290,7 @@ inline base base##Subtract##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Multiply##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x * (basePrim)_b.x,                                          \
     _a.y * (basePrim)_b.y,                                          \
     _a.z,                                                           \
@@ -290,7 +298,7 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x / (basePrim)_b.x,                                          \
     _a.y / (basePrim)_b.y,                                          \
     _a.z,                                                           \
@@ -300,7 +308,7 @@ inline base base##Divide##alt(base _a, altType _b)                  \
 #define PERI_DEF_VECTOR_OPERATIONS_43(base, basePrim, alt, altType) \
 inline base base##Add##alt(base _a, altType _b)                     \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x + (basePrim)_b.x,                                          \
     _a.y + (basePrim)_b.y,                                          \
     _a.z + (basePrim)_b.z,                                          \
@@ -308,7 +316,7 @@ inline base base##Add##alt(base _a, altType _b)                     \
 }                                                                   \
 inline base base##Subtract##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x - (basePrim)_b.x,                                          \
     _a.y - (basePrim)_b.y,                                          \
     _a.z - (basePrim)_b.z,                                          \
@@ -316,7 +324,7 @@ inline base base##Subtract##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Multiply##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x * (basePrim)_b.x,                                          \
     _a.y * (basePrim)_b.y,                                          \
     _a.z * (basePrim)_b.z,                                          \
@@ -324,7 +332,7 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x / (basePrim)_b.x,                                          \
     _a.y / (basePrim)_b.y,                                          \
     _a.z / (basePrim)_b.z,                                          \
@@ -334,7 +342,7 @@ inline base base##Divide##alt(base _a, altType _b)                  \
 #define PERI_DEF_VECTOR_OPERATIONS_44(base, basePrim, alt, altType) \
 inline base base##Add##alt(base _a, altType _b)                     \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x + (basePrim)_b.x,                                          \
     _a.y + (basePrim)_b.y,                                          \
     _a.z + (basePrim)_b.z,                                          \
@@ -342,7 +350,7 @@ inline base base##Add##alt(base _a, altType _b)                     \
 }                                                                   \
 inline base base##Subtract##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x - (basePrim)_b.x,                                          \
     _a.y - (basePrim)_b.y,                                          \
     _a.z - (basePrim)_b.z,                                          \
@@ -350,7 +358,7 @@ inline base base##Subtract##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Multiply##alt(base _a, altType _b)                \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x * (basePrim)_b.x,                                          \
     _a.y * (basePrim)_b.y,                                          \
     _a.z * (basePrim)_b.z,                                          \
@@ -358,7 +366,7 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  base f = {                                                    \
+  base f = {                                                        \
     _a.x / (basePrim)_b.x,                                          \
     _a.y / (basePrim)_b.y,                                          \
     _a.z / (basePrim)_b.z,                                          \
