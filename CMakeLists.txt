@@ -10,7 +10,8 @@ add_library (Peridot STATIC
 
   "src/defines.h"
   "src/core.c"
- )
+  "include/peridot_vector.h"
+  "include/peridot_matrix.h")
 
 set_target_properties(Peridot PROPERTIES LINKER_LANGUAGE C)
 

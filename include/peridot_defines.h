@@ -9,7 +9,7 @@
 // =====
 
 #define PERI_DEF_VEC2(type, typeshort) \
-typedef union Vector2##typeshort       \
+typedef union Vec2##typeshort       \
 {                                      \
   type elements[2];                    \
   struct                               \
@@ -17,10 +17,10 @@ typedef union Vector2##typeshort       \
     union { type x, r; };              \
     union { type y, g; };              \
   };                                   \
-} Vector2##typeshort;
+} Vec2##typeshort;
 
 #define PERI_DEF_VEC3(type, typeshort) \
-typedef union Vector3##typeshort       \
+typedef union Vec3##typeshort       \
 {                                      \
   type elements[3];                    \
   struct                               \
@@ -29,10 +29,10 @@ typedef union Vector3##typeshort       \
     union { type y, g; };              \
     union { type z, b; };              \
   };                                   \
-} Vector3##typeshort;
+} Vec3##typeshort;
 
 #define PERI_DEF_VEC4(type, typeshort) \
-typedef union Vector4##typeshort       \
+typedef union Vec4##typeshort       \
 {                                      \
   type elements[4];                    \
   struct                               \
@@ -42,7 +42,7 @@ typedef union Vector4##typeshort       \
     union { type z, b; };              \
     union { type w, a; };              \
   };                                   \
-} Vector4##typeshort;
+} Vec4##typeshort;
 
 PERI_DEF_VEC2(float,);
 PERI_DEF_VEC3(float,);
@@ -59,6 +59,22 @@ PERI_DEF_VEC4(uint32_t, U);
 #undef PERI_DEF_VEC2
 #undef PERI_DEF_VEC3
 #undef PERI_DEF_VEC4
+
+// =====
+// Matrix
+// =====
+
+typedef union Mat4
+{
+  float elements[16];
+  struct
+  {
+    union { Vec4 x, col0; };
+    union { Vec4 y, col1; };
+    union { Vec4 z, col2; };
+    union { Vec4 w, col3; };
+  };
+} Mat4;
 
 
 #endif // !GEM_PERIDOT_DEFINES_H_
