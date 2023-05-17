@@ -9,6 +9,8 @@ extern "C" {
 #include "include/peridot_defines.h"
 #include "include/peridot_vector.h"
 #include "include/peridot_matrix.h"
+#include "include/peridot_quaternion.h"
+#include "include/peridot_transform.h"
 
 #ifdef __cplusplus
 }

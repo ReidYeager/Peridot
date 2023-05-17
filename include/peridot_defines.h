@@ -9,7 +9,7 @@
 // =====
 
 #define PERI_DEF_VEC2(type, typeshort) \
-typedef union Vec2##typeshort       \
+typedef union Vec2##typeshort          \
 {                                      \
   type elements[2];                    \
   struct                               \
@@ -20,7 +20,7 @@ typedef union Vec2##typeshort       \
 } Vec2##typeshort;
 
 #define PERI_DEF_VEC3(type, typeshort) \
-typedef union Vec3##typeshort       \
+typedef union Vec3##typeshort          \
 {                                      \
   type elements[3];                    \
   struct                               \
@@ -32,7 +32,7 @@ typedef union Vec3##typeshort       \
 } Vec3##typeshort;
 
 #define PERI_DEF_VEC4(type, typeshort) \
-typedef union Vec4##typeshort       \
+typedef union Vec4##typeshort          \
 {                                      \
   type elements[4];                    \
   struct                               \
@@ -75,6 +75,12 @@ typedef union Mat4
     union { Vec4 w, col3; };
   };
 } Mat4;
+static const Mat4 IdentityMat4 = {
+  1.0f, 0.0f, 0.0f, 0.0f,
+  0.0f, 1.0f, 0.0f, 0.0f,
+  0.0f, 0.0f, 1.0f, 0.0f,
+  0.0f, 0.0f, 0.0f, 1.0f
+};
 
 
 #endif // !GEM_PERIDOT_DEFINES_H_
