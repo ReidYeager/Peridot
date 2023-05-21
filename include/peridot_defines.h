@@ -4,6 +4,10 @@
 
 #include <stdint.h>
 
+#define PDT_PI 3.14159
+#define PDT_DEGREES_TO_RADIANS(x) ((x) * (PDT_PI / 180.0))
+#define PDT_RADIANS_TO_DEGREES(x) ((x) * (180.0 / PDT_PI))
+
 // =====
 // Vectors
 // =====

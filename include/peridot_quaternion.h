@@ -16,6 +16,8 @@ inline Quaternion QuaternionFromEuler(Vec3 _euler)
 {
   Quaternion newQuat = { 0 };
 
+  _euler = Vec3MultiplyScalarFloat(_euler, 0.008726646f);
+
   Quaternion a = { 0.0f, (float)sin(_euler.y), 0.0f, (float)cos(_euler.y) }; // Yaw
   Quaternion b = { (float)sin(_euler.x), 0.0f, 0.0f, (float)cos(_euler.x) }; // Pitch
   Quaternion c = { 0.0f, 0.0f, (float)sin(_euler.z), (float)cos(_euler.z) }; // Roll

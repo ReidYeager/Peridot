@@ -147,13 +147,13 @@ inline Vec4 Mat4MultiplyVec4(Mat4 _matrix, Vec4 _vector)
 
 inline Mat4 Mat4MuliplyMat4(Mat4 _left, Mat4 _right)
 {
-  _right = Mat4Transpose(_right);
+  _left = Mat4Transpose(_left);
 
   Mat4 newMat = {
-    Vec4Dot(_left.x, _right.x), Vec4Dot(_left.x, _right.y), Vec4Dot(_left.x, _right.z), Vec4Dot(_left.x, _right.w),
-    Vec4Dot(_left.y, _right.x), Vec4Dot(_left.y, _right.y), Vec4Dot(_left.y, _right.z), Vec4Dot(_left.y, _right.w),
-    Vec4Dot(_left.z, _right.x), Vec4Dot(_left.z, _right.y), Vec4Dot(_left.z, _right.z), Vec4Dot(_left.z, _right.w),
-    Vec4Dot(_left.w, _right.x), Vec4Dot(_left.w, _right.y), Vec4Dot(_left.w, _right.z), Vec4Dot(_left.w, _right.w) };
+    Vec4Dot(_left.x, _right.x), Vec4Dot(_left.y, _right.x), Vec4Dot(_left.z, _right.x), Vec4Dot(_left.w, _right.x),
+    Vec4Dot(_left.x, _right.y), Vec4Dot(_left.y, _right.y), Vec4Dot(_left.z, _right.y), Vec4Dot(_left.w, _right.y),
+    Vec4Dot(_left.x, _right.z), Vec4Dot(_left.y, _right.z), Vec4Dot(_left.z, _right.z), Vec4Dot(_left.w, _right.z),
+    Vec4Dot(_left.x, _right.w), Vec4Dot(_left.y, _right.w), Vec4Dot(_left.z, _right.w), Vec4Dot(_left.w, _right.w) };
   return newMat;
 }
 
