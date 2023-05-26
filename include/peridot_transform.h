@@ -32,26 +32,37 @@ inline Mat4 TransformEulerToMat4(Vec3 _position, Vec3 _eulerRotation, Vec3 _scal
 
 #include <stdio.h>
 
-inline Mat4 ProjectionPerspective(float _screenRatio, float _fov, float _nearPlane, float _farPlane)
+inline Mat4 ProjectionPerspective(float _screenRatio, float _fovY, float _near, float _far)
 {
-  const float hdRatio = 1.77777777778f; // 16:9 ratio
+  float tanHalfFov = tanf(PDT_DEGREES_TO_RADIANS(_fovY) / 2.0);
+
+  Mat4 newMat = { 0 };
+  newMat.x.x = 1 / (_screenRatio * tanHalfFov);
+  newMat.y.y = PDT_VULKAN_COPE / (tanHalfFov);
+  newMat.z.z = -(_far + _near) / (_far - _near);
+  newMat.z.w = -1;
+  newMat.w.z = -(2 * _far * _near) / (_far - _near);
+
+  return newMat;
+}
+
+// Perspective projection matrix guaranteed to tightly contain the full 16x9 frame within itself
+// Alternative to cropping the frame for other ratios but can introduce warping at extreme ratios
+inline Mat4 ProjectionPerspectiveExtended(float _screenRatio, float _fovY, float _near, float _far)
+{
+  const double hdRatio = 1.77777777778; // 16:9 ratio
   int lockX = (_screenRatio >= hdRatio);
+  float ratioX = lockX ? _screenRatio : hdRatio;
+  float ratioY = lockX ? 1.0f :  _screenRatio / hdRatio;
 
-  float ratioX = lockX ? _screenRatio : 1.0f;
-  float ratioY = lockX ? 1.0f : _screenRatio;
+  float tanHalfFov = tanf(PDT_DEGREES_TO_RADIANS(_fovY) / 2.0);
 
-  float tanFovHalf = tanf(PDT_DEGREES_TO_RADIANS(_fov / 2.0));
-  float d = 1.0 / tanFovHalf;
-
-  float a = (-_farPlane - _nearPlane)/(_nearPlane - _farPlane);
-  float b = (2 * _farPlane * _nearPlane)/(_nearPlane - _farPlane);
-
-  Mat4 newMat = {
-    d / ratioX, 0.0f      , 0.0f, 0.0f,
-    0.0f      , d * ratioY, 0.0f, 0.0f,
-    0.0f      , 0.0f      , a, 1.0f,
-    0.0f      , 0.0f      , b, 0.0f
-  };
+  Mat4 newMat = { 0 };
+  newMat.x.x = 1 / (ratioX * tanHalfFov);
+  newMat.y.y = PDT_VULKAN_COPE * ratioY / (tanHalfFov);
+  newMat.z.z = -(_far + _near) / (_far - _near);
+  newMat.z.w = -1;
+  newMat.w.z = -(2 * _far * _near) / (_far - _near);
 
   return newMat;
 }

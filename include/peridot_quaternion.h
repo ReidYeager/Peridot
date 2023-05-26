@@ -14,16 +14,14 @@ inline Quaternion QuaternionNormalize(Quaternion _quaternion);
 
 inline Quaternion QuaternionFromEuler(Vec3 _euler)
 {
-  Quaternion newQuat = { 0 };
-
   _euler = Vec3MultiplyScalarFloat(_euler, 0.008726646f);
 
-  Quaternion a = { 0.0f, (float)sin(_euler.y), 0.0f, (float)cos(_euler.y) }; // Yaw
-  Quaternion b = { (float)sin(_euler.x), 0.0f, 0.0f, (float)cos(_euler.x) }; // Pitch
-  Quaternion c = { 0.0f, 0.0f, (float)sin(_euler.z), (float)cos(_euler.z) }; // Roll
+  Quaternion yaw   = { 0.0f, (float)sin(_euler.y), 0.0f, (float)cos(_euler.y) };
+  Quaternion pitch = { (float)sin(_euler.x), 0.0f, 0.0f, (float)cos(_euler.x) };
+  Quaternion roll  = { 0.0f, 0.0f, (float)sin(_euler.z), (float)cos(_euler.z) };
 
-  newQuat = QuaternionMultiplyQuaternion(a, b);
-  newQuat = QuaternionMultiplyQuaternion(newQuat, c);
+  Quaternion newQuat = QuaternionMultiplyQuaternion(yaw, pitch);
+  newQuat = QuaternionMultiplyQuaternion(newQuat, roll);
   return QuaternionNormalize(newQuat);
 }
 

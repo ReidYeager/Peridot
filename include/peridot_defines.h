@@ -4,6 +4,13 @@
 
 #include <stdint.h>
 
+#ifdef PERIDOT_VULKAN
+#define PDT_VULKAN_COPE -1
+#else
+#define PDT_VULKAN_COPE 1
+#endif // PERIDOT_VULKAN
+
+
 #define PDT_PI 3.14159
 #define PDT_DEGREES_TO_RADIANS(x) ((x) * (PDT_PI / 180.0))
 #define PDT_RADIANS_TO_DEGREES(x) ((x) * (180.0 / PDT_PI))
