@@ -67,11 +67,20 @@ inline Mat4 ProjectionPerspectiveExtended(float _screenRatio, float _fovY, float
   return newMat;
 }
 
-inline Mat4 ProjectionOrthographic()
+inline Mat4 ProjectionOrthographic(float _width, float _height, float _near, float _far)
 {
+  float hwidth = _width / 2.0f;
+  float hheight = _height / 2.0f;
+
+  float left = -hwidth;
+  float right = hwidth;
+  float top = -hheight;
+  float bottom = hheight;
+
   Mat4 newMat = IdentityMat4;
-
-
+  newMat.x.x = 2 / (right - left);
+  newMat.y.y = 2 / (top - bottom);
+  newMat.z.z = -2 / (_far - _near);
 
   return newMat;
 }
