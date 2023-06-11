@@ -9,15 +9,17 @@
 
 inline Mat4 TransformToMat4(Vec3 _position, Quaternion _rotation, Vec3 _scale)
 {
-  Mat4 newMat = QuaternionToMat4(_rotation);
-
-  newMat.col3.x = _position.x;
-  newMat.col3.y = _position.y;
-  newMat.col3.z = _position.z;
+  Mat4 newMat = IdentityMat4;
 
   newMat.col0.x *= _scale.x;
   newMat.col1.y *= _scale.y;
   newMat.col2.z *= _scale.z;
+
+  newMat = Mat4MuliplyMat4(QuaternionToMat4(_rotation), newMat);
+
+  newMat.col3.x += _position.x;
+  newMat.col3.y += _position.y;
+  newMat.col3.z += _position.z;
 
   return newMat;
 }
