@@ -5,7 +5,7 @@
 #include "include/peridot_defines.h"
 #include "include/peridot_vector.h"
 
-inline Mat4 Mat4FromElementArray(float* _elements, uint8_t _inputIsRowMajor)
+inline Mat4 Mat4FromElementArray(float* _elements, bool _inputIsRowMajor)
 {
   Mat4 newMat = { 0 };
   newMat.elements[0                          ] = _elements[0 ];
@@ -73,7 +73,7 @@ inline Mat4 Mat4FromScalar(float _value)
   return newMat;
 }
 
-inline uint8_t Mat4Compare(Mat4 _left, Mat4 _right)
+inline bool Mat4Compare(Mat4 _left, Mat4 _right)
 {
   return
        _left.elements[0 ] == _right.elements[0 ]

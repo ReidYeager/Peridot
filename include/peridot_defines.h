@@ -3,6 +3,7 @@
 #define GEM_PERIDOT_DEFINES_H_
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #ifdef PERIDOT_VULKAN
 #define PDT_VULKAN_COPE -1
