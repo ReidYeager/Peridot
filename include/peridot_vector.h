@@ -241,6 +241,7 @@ inline base base##Add##alt(base _a, altType _b)                     \
     (basePrim)(_a.y + _b),                                          \
     (basePrim)(_a.z + _b),                                          \
     (basePrim)(_a.w + _b) };                                        \
+  return f;                                                         \
 }                                                                   \
 inline base base##Subtract##alt(base _a, altType _b)                \
 {                                                                   \
@@ -249,6 +250,7 @@ inline base base##Subtract##alt(base _a, altType _b)                \
     (basePrim)(_a.y - _b),                                          \
     (basePrim)(_a.z - _b),                                          \
     (basePrim)(_a.w - _b) };                                        \
+  return f;                                                         \
 }                                                                   \
 inline base base##Multiply##alt(base _a, altType _b)                \
 {                                                                   \
@@ -257,6 +259,7 @@ inline base base##Multiply##alt(base _a, altType _b)                \
     (basePrim)(_a.y * _b),                                          \
     (basePrim)(_a.z * _b),                                          \
     (basePrim)(_a.w * _b) };                                        \
+  return f;                                                         \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
@@ -265,6 +268,7 @@ inline base base##Divide##alt(base _a, altType _b)                  \
     (basePrim)(_a.y / _b),                                          \
     (basePrim)(_a.z / _b),                                          \
     (basePrim)(_a.w / _b) };                                        \
+  return f;                                                         \
 }
 
 #define PERI_DEF_VECTOR_OPERATIONS_42(base, basePrim, alt, altType) \
