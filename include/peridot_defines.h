@@ -26,8 +26,8 @@ typedef union Vec2##typeshort          \
   type elements[2];                    \
   struct                               \
   {                                    \
-    union { type x, r; };              \
-    union { type y, g; };              \
+    union { type x, r, width; };       \
+    union { type y, g, height; };      \
   };                                   \
 } Vec2##typeshort;
 
