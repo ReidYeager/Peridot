@@ -9,7 +9,7 @@
 
 inline Mat4 TransformToMat4(Vec3 _position, Quaternion _rotation, Vec3 _scale)
 {
-  Mat4 newMat = IdentityMat4;
+  Mat4 newMat = mat4Identity;
 
   newMat.col0.x *= _scale.x;
   newMat.col1.y *= _scale.y;
@@ -36,11 +36,11 @@ inline Mat4 TransformEulerToMat4(Vec3 _position, Vec3 _eulerRotation, Vec3 _scal
 
 inline Mat4 ProjectionPerspective(float _screenRatio, float _fovY, float _near, float _far)
 {
-  float tanHalfFov = tanf(PDT_DEGREES_TO_RADIANS(_fovY) / 2.0);
+  float tanHalfFov = tanf(PERI_DEGREES_TO_RADIANS(_fovY) / 2.0);
 
   Mat4 newMat = { 0 };
   newMat.x.x = 1 / (_screenRatio * tanHalfFov);
-  newMat.y.y = PDT_VULKAN_COPE / (tanHalfFov);
+  newMat.y.y = PERI_VULKAN_COPE / (tanHalfFov);
   newMat.z.z = -(_far + _near) / (_far - _near);
   newMat.z.w = -1;
   newMat.w.z = -(2 * _far * _near) / (_far - _near);
@@ -57,11 +57,11 @@ inline Mat4 ProjectionPerspectiveExtended(float _screenRatio, float _fovY, float
   float ratioX = lockX ? _screenRatio : hdRatio;
   float ratioY = lockX ? 1.0f :  _screenRatio / hdRatio;
 
-  float tanHalfFov = tanf(PDT_DEGREES_TO_RADIANS(_fovY) / 2.0);
+  float tanHalfFov = tanf(PERI_DEGREES_TO_RADIANS(_fovY) / 2.0);
 
   Mat4 newMat = { 0 };
   newMat.x.x = 1 / (ratioX * tanHalfFov);
-  newMat.y.y = PDT_VULKAN_COPE * ratioY / (tanHalfFov);
+  newMat.y.y = PERI_VULKAN_COPE * ratioY / (tanHalfFov);
   newMat.z.z = -(_far + _near) / (_far - _near);
   newMat.z.w = -1;
   newMat.w.z = -(2 * _far * _near) / (_far - _near);
@@ -79,7 +79,7 @@ inline Mat4 ProjectionOrthographic(float _width, float _height, float _near, flo
   float top = -hheight;
   float bottom = hheight;
 
-  Mat4 newMat = IdentityMat4;
+  Mat4 newMat = mat4Identity;
   newMat.x.x = 2 / (right - left);
   newMat.y.y = 2 / (top - bottom);
   newMat.z.z = -2 / (_far - _near);

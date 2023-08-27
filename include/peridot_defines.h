@@ -6,15 +6,15 @@
 #include <stdbool.h>
 
 #ifdef PERIDOT_VULKAN
-#define PDT_VULKAN_COPE -1
+#define PERI_VULKAN_COPE -1
 #else
-#define PDT_VULKAN_COPE 1
+#define PERI_VULKAN_COPE 1
 #endif // PERIDOT_VULKAN
 
 
-#define PDT_PI 3.14159
-#define PDT_DEGREES_TO_RADIANS(x) ((x) * (PDT_PI / 180.0))
-#define PDT_RADIANS_TO_DEGREES(x) ((x) * (180.0 / PDT_PI))
+#define PERI_PI 3.14159
+#define PERI_DEGREES_TO_RADIANS(x) ((x) * (PERI_PI / 180.0))
+#define PERI_RADIANS_TO_DEGREES(x) ((x) * (180.0 / PERI_PI))
 
 // =====
 // Vectors
@@ -87,13 +87,8 @@ typedef union Mat4
     union { Vec4 w, col3; };
   };
 } Mat4;
-static const Mat4 IdentityMat4 = {
-  1.0f, 0.0f, 0.0f, 0.0f,
-  0.0f, 1.0f, 0.0f, 0.0f,
-  0.0f, 0.0f, 1.0f, 0.0f,
-  0.0f, 0.0f, 0.0f, 1.0f
-};
 
+extern const Mat4 mat4Identity;
 
 #endif // !GEM_PERIDOT_DEFINES_H_
 
