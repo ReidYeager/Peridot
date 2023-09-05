@@ -11,7 +11,7 @@ add_library (Peridot STATIC
   "include/peridot_matrix.h"
   "include/peridot_quaternion.h"
   "include/peridot_transform.h"
-  "source.c"
+  "peridot.c"
 )
 
 set_target_properties(Peridot PROPERTIES LINKER_LANGUAGE C)

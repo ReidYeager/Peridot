@@ -5,6 +5,34 @@
 #include "include/peridot_defines.h"
 #include "include/peridot_vector.h"
 
+typedef union Mat4
+{
+  float elements[16];
+  struct
+  {
+    union { Vec4 x, col0; };
+    union { Vec4 y, col1; };
+    union { Vec4 z, col2; };
+    union { Vec4 w, col3; };
+  };
+} Mat4;
+
+#ifdef __clang__
+#define mat4Identity (Mat4) { \
+  1.0f, 0.0f, 0.0f, 0.0f,     \
+  0.0f, 1.0f, 0.0f, 0.0f,     \
+  0.0f, 0.0f, 1.0f, 0.0f,     \
+  0.0f, 0.0f, 0.0f, 1.0f      \
+}
+#else
+#define mat4Identity {    \
+  1.0f, 0.0f, 0.0f, 0.0f, \
+  0.0f, 1.0f, 0.0f, 0.0f, \
+  0.0f, 0.0f, 1.0f, 0.0f, \
+  0.0f, 0.0f, 0.0f, 1.0f  \
+}
+#endif
+
 inline Mat4 Mat4FromElementArray(float* _elements, bool _inputIsRowMajor)
 {
   Mat4 newMat = { 0 };

@@ -11,6 +11,7 @@ extern "C" {
 #include "include/peridot_matrix.h"
 #include "include/peridot_quaternion.h"
 #include "include/peridot_transform.h"
+#include "include/peridot_projection.h"
 
 #ifdef __cplusplus
 }
