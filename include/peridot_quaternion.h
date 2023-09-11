@@ -14,7 +14,7 @@ inline Quaternion QuaternionNormalize(Quaternion _quaternion);
 
 inline Quaternion QuaternionFromEuler(Vec3 _euler)
 {
-  _euler = Vec3MultiplyScalarFloat(_euler, 0.008726646f);
+  _euler = Vec3MultiplyFloat(_euler, 0.008726646f);
 
   Quaternion yaw   = { 0.0f, (float)sin(_euler.y), 0.0f, (float)cos(_euler.y) };
   Quaternion pitch = { (float)sin(_euler.x), 0.0f, 0.0f, (float)cos(_euler.x) };

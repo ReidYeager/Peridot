@@ -135,7 +135,7 @@ inline float base##Magnitude(base _a)                      \
 }                                                          \
 inline base base##Normalize(base _a)                       \
 {                                                          \
-  return base##DivideScalarFloat(_a, base##Magnitude(_a)); \
+  return base##DivideFloat(_a, base##Magnitude(_a)); \
 }                                                          \
 inline float base##Dot(base _a, base _b)                   \
 {                                                          \
@@ -262,7 +262,7 @@ inline float base##Magnitude(base _a)                                \
 }                                                                    \
 inline base base##Normalize(base _a)                                 \
 {                                                                    \
-  return base##DivideScalarFloat(_a, base##Magnitude(_a));           \
+  return base##DivideFloat(_a, base##Magnitude(_a));                 \
 }                                                                    \
 inline float base##Dot(base _a, base _b)                             \
 {                                                                    \
@@ -279,7 +279,18 @@ inline base base##Cross(base _a, base _b)                            \
     _a.z * _b.x - _a.x * _b.z,                                       \
     _a.x * _b.y - _a.y * _b.x };                                     \
   return f;                                                          \
-}
+}                                                                    \
+inline float base##Angle(base _a, base _b)                           \
+{                                                                    \
+  float angle = base##Dot(_a, _b);                                   \
+  angle /= (base##Magnitude(_a) * base##Magnitude(_b));              \
+  return acosf(angle);                                               \
+}                                                                    \
+inline base base##Project(base _a, base _b)                          \
+{                                                                    \
+  base p = base##Normalize(_b);                                      \
+  return base##MultiplyFloat(p, base##Dot(_a, _b));                  \
+}                                                                    \
 
 // =====
 // Vec4X
@@ -444,7 +455,7 @@ inline float base##Magnitude(base _a)                                           
 }                                                                                    \
 inline base base##Normalize(base _a)                                                 \
 {                                                                                    \
-  return base##DivideScalarFloat(_a, base##Magnitude(_a));                           \
+  return base##DivideFloat(_a, base##Magnitude(_a));                                 \
 }                                                                                    \
 inline float base##Dot(base _a, base _b)                                             \
 {                                                                                    \
@@ -455,10 +466,10 @@ inline uint32_t base##Compare(base _a, base _b)                                 
   return ((_a.x == _b.x) && (_a.y == _b.y) && (_a.z == _b.z) && (_a.w == _b.w));     \
 }
 
-#define PERI_DEF_FULL_VECTOR_OPERATIONS(size, base, basePrimitive)              \
-PERI_DEF_VECTOR_OPERATIONS_##size##1(base, basePrimitive, ScalarFloat, float)   \
-PERI_DEF_VECTOR_OPERATIONS_##size##1(base, basePrimitive, ScalarInt, int32_t)   \
-PERI_DEF_VECTOR_OPERATIONS_##size##1(base, basePrimitive, ScalarUint, uint32_t) \
+#define PERI_DEF_FULL_VECTOR_OPERATIONS(size, base, basePrimitive)        \
+PERI_DEF_VECTOR_OPERATIONS_##size##1(base, basePrimitive, Float, float)   \
+PERI_DEF_VECTOR_OPERATIONS_##size##1(base, basePrimitive, Int, int32_t)   \
+PERI_DEF_VECTOR_OPERATIONS_##size##1(base, basePrimitive, Uint, uint32_t) \
 PERI_DEF_VECTOR_OPERATIONS_##size##2(base, basePrimitive, Vec2, Vec2)     \
 PERI_DEF_VECTOR_OPERATIONS_##size##3(base, basePrimitive, Vec3, Vec3)     \
 PERI_DEF_VECTOR_OPERATIONS_##size##4(base, basePrimitive, Vec4, Vec4)     \

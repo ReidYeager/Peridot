@@ -225,10 +225,10 @@ inline Mat4 Mat4Invert(Mat4 _matrix)
       + _matrix.elements[12] * _matrix.elements[6 ] * _matrix.elements[9 ];
 
     determinant =
-        _matrix.elements[0 ] * newMat.elements[0 ]
-      + _matrix.elements[1 ] * newMat.elements[4 ]
-      + _matrix.elements[2 ] * newMat.elements[8 ]
-      + _matrix.elements[3 ] * newMat.elements[12];
+        (double)_matrix.elements[0 ] * (double)newMat.elements[0 ]
+      + (double)_matrix.elements[1 ] * (double)newMat.elements[4 ]
+      + (double)_matrix.elements[2 ] * (double)newMat.elements[8 ]
+      + (double)_matrix.elements[3 ] * (double)newMat.elements[12];
 
     if (determinant == 0)
     {

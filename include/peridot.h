@@ -13,6 +13,9 @@ extern "C" {
 #include "include/peridot_transform.h"
 #include "include/peridot_projection.h"
 
+#define PeriMin(a, b) ((a < b) ? a : b)
+#define PeriMax(a, b) ((a > b) ? a : b)
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus
