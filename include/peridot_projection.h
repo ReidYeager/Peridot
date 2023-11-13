@@ -23,12 +23,11 @@ inline Mat4 ProjectionPerspective(float _screenRatio, float _fovY, float _near, 
 
 // Perspective projection matrix guaranteed to tightly contain the full 16x9 frame within itself
 // Alternative to cropping the frame for other ratios but can introduce warping at extreme ratios
-inline Mat4 ProjectionPerspectiveExtended(float _screenRatio, float _fovY, float _near, float _far)
+inline Mat4 ProjectionPerspectiveExtended(float _screenRatio, float guaranteedRatio, float _fovY, float _near, float _far)
 {
-  const double hdRatio = 1.77777777778; // 16:9 ratio
-  int lockX = (_screenRatio >= hdRatio);
-  float ratioX = lockX ? _screenRatio : hdRatio;
-  float ratioY = lockX ? 1.0f : _screenRatio / hdRatio;
+  int lockX = (_screenRatio >= guaranteedRatio);
+  float ratioX = lockX ? _screenRatio : guaranteedRatio;
+  float ratioY = lockX ? 1.0f : _screenRatio / guaranteedRatio;
 
   float tanHalfFov = tanf(PERI_DEGREES_TO_RADIANS(_fovY) / 2.0);
 
