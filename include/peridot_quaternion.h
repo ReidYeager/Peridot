@@ -7,7 +7,12 @@
 #include "include/peridot_matrix.h"
 
 typedef Vec4 Quaternion;
-static const Quaternion IdentityQuaternion = { 0.0f, 0.0f, 0.0f, 1.0f };
+
+#ifdef __clang__
+#define quaternionIdentity (Transform){ 0.0f, 0.0f, 0.0f, 1.0f }
+#else
+#define quaternionIdentity { 0.0f, 0.0f, 0.0f, 1.0f }
+#endif
 
 inline Quaternion QuaternionMultiplyQuaternion(Quaternion _left, Quaternion _right);
 inline Quaternion QuaternionNormalize(Quaternion _quaternion);
