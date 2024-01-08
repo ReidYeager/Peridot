@@ -86,6 +86,8 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
+  if (_b == 0)                                                      \
+    return _a;                                                      \
   base f = {                                                        \
     (basePrim)(_a.x / _b),                                          \
     (basePrim)(_a.y / _b) };                                        \
@@ -116,6 +118,8 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
+  if (_b.x == 0 || _b.y == 0)                                       \
+    return _a;                                                      \
   base f = {                                                        \
     (basePrim)(_a.x / _b.x),                                        \
     (basePrim)(_a.y / _b.y) };                                      \
@@ -177,6 +181,8 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
+  if (_b == 0)                                                      \
+    return _a;                                                      \
   base f = {                                                        \
     (basePrim)(_a.x / _b),                                          \
     (basePrim)(_a.y / _b),                                          \
@@ -211,6 +217,8 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
+  if (_b.x == 0 || _b.y == 0)                                       \
+    return _a;                                                      \
   base f = {                                                        \
     (basePrim)(_a.x / _b.x),                                        \
     (basePrim)(_a.y / _b.y),                                        \
@@ -245,6 +253,8 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
+  if (_b.x == 0 || _b.y == 0 || _b.z == 0)                          \
+    return _a;                                                      \
   base f = {                                                        \
     (basePrim)(_a.x / _b.x),                                        \
     (basePrim)(_a.y / _b.y),                                        \
@@ -326,6 +336,8 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
+  if (_b == 0)                                                      \
+    return _a;                                                      \
   base f = {                                                        \
     (basePrim)(_a.x / _b),                                          \
     (basePrim)(_a.y / _b),                                          \
@@ -364,6 +376,8 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
+  if (_b.x == 0 || _b.y == 0)                                       \
+    return _a;                                                      \
   base f = {                                                        \
     (basePrim)(_a.x / _b.x),                                        \
     (basePrim)(_a.y / _b.y),                                        \
@@ -402,6 +416,8 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
+  if (_b.x == 0 || _b.y == 0 || _b.z == 0)                          \
+    return _a;                                                      \
   base f = {                                                        \
     (basePrim)(_a.x / _b.x),                                        \
     (basePrim)(_a.y / _b.y),                                        \
@@ -440,6 +456,8 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
+  if (_b.x == 0 || _b.y == 0 || _b.z == 0 || _b.w == 0)             \
+    return _a;                                                      \
   base f = {                                                        \
     (basePrim)(_a.x / _b.x),                                        \
     (basePrim)(_a.y / _b.y),                                        \
