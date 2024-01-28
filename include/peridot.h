@@ -15,6 +15,7 @@ extern "C" {
 
 #define PeriMin(a, b) ((a < b) ? a : b)
 #define PeriMax(a, b) ((a > b) ? a : b)
+#define PeriClamp(value, min, max) PeriMin(PeriMax(value, min), max)
 
 #ifdef __cplusplus
 }
