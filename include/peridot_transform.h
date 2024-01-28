@@ -1,11 +1,12 @@
 
 #ifndef GEM_PERIDOT_TRANSFORM_H_
 #define GEM_PERIDOT_TRANSFORM_H_
+#ifdef PERIDOT_C
 
-#include "include/peridot_defines.h"
-#include "include/peridot_vector.h"
-#include "include/peridot_matrix.h"
-#include "include/peridot_quaternion.h"
+#include "peridot_defines.h"
+#include "peridot_vector.h"
+#include "peridot_matrix.h"
+#include "peridot_quaternion.h"
 
 typedef struct Transform
 {
@@ -38,4 +39,5 @@ inline Mat4 TransformToMat4(Transform _transform)
   return newMat;
 }
 
+#endif // PERIDOT_C
 #endif // !GEM_PERIDOT_TRANSFORM_H_

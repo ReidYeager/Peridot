@@ -2,10 +2,17 @@
 #ifndef GEM_PERIDOT_PROJECTION_H_
 #define GEM_PERIDOT_PROJECTION_H_
 
-#include "include/peridot_defines.h"
-#include "include/peridot_vector.h"
-#include "include/peridot_matrix.h"
-#include "include/peridot_quaternion.h"
+#include "peridot_defines.h"
+
+#ifdef PERIDOT_C
+#include "peridot_vector.h"
+#include "peridot_matrix.h"
+#include "peridot_quaternion.h"
+#else
+#include "peridot_vector.hpp"
+#include "peridot_matrix.hpp"
+#include "peridot_quaternion.hpp"
+#endif // PERIDOT_C
 
 inline Mat4 ProjectionPerspective(float _screenRatio, float _fovY, float _near, float _far)
 {

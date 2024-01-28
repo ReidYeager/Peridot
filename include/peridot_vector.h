@@ -1,8 +1,9 @@
 
 #ifndef GEM_PERIDOT_VECTOR_H_
 #define GEM_PERIDOT_VECTOR_H_
+#ifdef PERIDOT_C
 
-#include "include/peridot_defines.h"
+#include "peridot_defines.h"
 
 #include <math.h>
 
@@ -552,4 +553,5 @@ PERI_DEF_FULL_VECTOR_OPERATIONS(4, Vec4U, uint32_t)
 #undef PERI_DEF_OPERATIONS_4
 #undef PERI_DEF_FULL_VECTOR_OPERATIONS
 
+#endif // !PERIDOT_C
 #endif // !GEM_PERIDOT_VECTOR_H_

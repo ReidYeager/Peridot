@@ -1,15 +1,16 @@
 
 #ifndef GEM_PERIDOT_QUATERNION_H_
 #define GEM_PERIDOT_QUATERNION_H_
+#ifdef PERIDOT_C
 
-#include "include/peridot_defines.h"
-#include "include/peridot_vector.h"
-#include "include/peridot_matrix.h"
+#include "peridot_defines.h"
+#include "peridot_vector.h"
+#include "peridot_matrix.h"
 
 typedef Vec4 Quaternion;
 
 #ifdef __clang__
-#define quaternionIdentity (Transform){ 0.0f, 0.0f, 0.0f, 1.0f }
+#define quaternionIdentity (Quaternion){ 0.0f, 0.0f, 0.0f, 1.0f }
 #else
 #define quaternionIdentity { 0.0f, 0.0f, 0.0f, 1.0f }
 #endif
@@ -128,4 +129,5 @@ inline Vec3 QuaternionMultiplyVec3(Quaternion _quaternion, Vec3 _vector)
   return Mat4MultiplyVec3(qMat, _vector);
 }
 
+#endif // PERIDOT_C
 #endif // !GEM_PERIDOT_QUATERNION_H_

@@ -1,9 +1,10 @@
 
 #ifndef GEM_PERIDOT_MATRIX_H_
 #define GEM_PERIDOT_MATRIX_H_
+#ifdef PERIDOT_C
 
-#include "include/peridot_defines.h"
-#include "include/peridot_vector.h"
+#include "peridot_defines.h"
+#include "peridot_vector.h"
 
 typedef union Mat4
 {
@@ -344,4 +345,5 @@ inline Mat4 Mat4Invert(Mat4 _matrix)
     return newMat;
 }
 
+#endif // PERIDOT_C
 #endif // !GEM_PERIDOT_MATRIX_H_
