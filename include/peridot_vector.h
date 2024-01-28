@@ -46,6 +46,10 @@ PERI_DEF_VEC2(float, );
 PERI_DEF_VEC3(float, );
 PERI_DEF_VEC4(float, );
 
+PERI_DEF_VEC2(double, D);
+PERI_DEF_VEC3(double, D);
+PERI_DEF_VEC4(double, D);
+
 PERI_DEF_VEC2(int32_t, I);
 PERI_DEF_VEC3(int32_t, I);
 PERI_DEF_VEC4(int32_t, I);
@@ -139,7 +143,7 @@ inline float base##Magnitude(base _a)                      \
 }                                                          \
 inline base base##Normalize(base _a)                       \
 {                                                          \
-  return base##DivideFloat(_a, base##Magnitude(_a)); \
+  return base##DivideFloat(_a, base##Magnitude(_a));       \
 }                                                          \
 inline float base##Dot(base _a, base _b)                   \
 {                                                          \
@@ -148,6 +152,11 @@ inline float base##Dot(base _a, base _b)                   \
 inline uint32_t base##Compare(base _a, base _b)            \
 {                                                          \
   return ((_a.x == _b.x) && (_a.y == _b.y));               \
+}                                                          \
+inline base base##Negate(base _a)                          \
+{                                                          \
+  base v = { -_a.x, -_a.y };                               \
+  return v;                                                \
 }
 
 // =====
@@ -301,6 +310,11 @@ inline base base##Project(base _a, base _b)                          \
   base p = base##Normalize(_b);                                      \
   return base##MultiplyFloat(p, base##Dot(_a, _b));                  \
 }                                                                    \
+inline base base##Negate(base _a)                                    \
+{                                                                    \
+  base v = { -_a.x, -_a.y, -_a.z };                                  \
+  return v;                                                          \
+}
 
 // =====
 // Vec4X
@@ -482,15 +496,24 @@ inline float base##Dot(base _a, base _b)                                        
 inline uint32_t base##Compare(base _a, base _b)                                      \
 {                                                                                    \
   return ((_a.x == _b.x) && (_a.y == _b.y) && (_a.z == _b.z) && (_a.w == _b.w));     \
+}                                                                                    \
+inline base base##Negate(base _a)                                                    \
+{                                                                                    \
+  base v = { -_a.x, -_a.y, -_a.z, -_a.w };                                           \
+  return v;                                                                          \
 }
 
 #define PERI_DEF_FULL_VECTOR_OPERATIONS(size, base, basePrimitive)        \
 PERI_DEF_VECTOR_OPERATIONS_##size##1(base, basePrimitive, Float, float)   \
+PERI_DEF_VECTOR_OPERATIONS_##size##1(base, basePrimitive, Double, double) \
 PERI_DEF_VECTOR_OPERATIONS_##size##1(base, basePrimitive, Int, int32_t)   \
 PERI_DEF_VECTOR_OPERATIONS_##size##1(base, basePrimitive, Uint, uint32_t) \
 PERI_DEF_VECTOR_OPERATIONS_##size##2(base, basePrimitive, Vec2, Vec2)     \
 PERI_DEF_VECTOR_OPERATIONS_##size##3(base, basePrimitive, Vec3, Vec3)     \
 PERI_DEF_VECTOR_OPERATIONS_##size##4(base, basePrimitive, Vec4, Vec4)     \
+PERI_DEF_VECTOR_OPERATIONS_##size##2(base, basePrimitive, Vec2D, Vec2D)   \
+PERI_DEF_VECTOR_OPERATIONS_##size##3(base, basePrimitive, Vec3D, Vec3D)   \
+PERI_DEF_VECTOR_OPERATIONS_##size##4(base, basePrimitive, Vec4D, Vec4D)   \
 PERI_DEF_VECTOR_OPERATIONS_##size##2(base, basePrimitive, Vec2I, Vec2I)   \
 PERI_DEF_VECTOR_OPERATIONS_##size##3(base, basePrimitive, Vec3I, Vec3I)   \
 PERI_DEF_VECTOR_OPERATIONS_##size##4(base, basePrimitive, Vec4I, Vec4I)   \
@@ -502,6 +525,9 @@ PERI_DEF_OPERATIONS_##size(base)
 PERI_DEF_FULL_VECTOR_OPERATIONS(2, Vec2, float)
 PERI_DEF_FULL_VECTOR_OPERATIONS(3, Vec3, float)
 PERI_DEF_FULL_VECTOR_OPERATIONS(4, Vec4, float)
+PERI_DEF_FULL_VECTOR_OPERATIONS(2, Vec2D, double)
+PERI_DEF_FULL_VECTOR_OPERATIONS(3, Vec3D, double)
+PERI_DEF_FULL_VECTOR_OPERATIONS(4, Vec4D, double)
 PERI_DEF_FULL_VECTOR_OPERATIONS(2, Vec2I, int32_t)
 PERI_DEF_FULL_VECTOR_OPERATIONS(3, Vec3I, int32_t)
 PERI_DEF_FULL_VECTOR_OPERATIONS(4, Vec4I, int32_t)
