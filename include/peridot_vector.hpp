@@ -12,34 +12,35 @@ class Vec2I; class Vec3I; class Vec4I;
 class Vec2U; class Vec3U; class Vec4U;
 
 #define FN_DEC_OPERATOR_ARITHMETIC(base, baseType, alt, symbol) \
-inline base  operator symbol   (const alt other) const; \
-inline base& operator symbol##=(const alt other);
+inline base  operator symbol   (const alt& other) const;         \
+inline base& operator symbol##=(const alt& other);
 
-#define FN_DEC_OPERATORS(base, baseType, alt) \
+#define FN_DEC_OPERATORS(base, baseType, alt)      \
 FN_DEC_OPERATOR_ARITHMETIC(base, baseType, alt, +) \
 FN_DEC_OPERATOR_ARITHMETIC(base, baseType, alt, -) \
 FN_DEC_OPERATOR_ARITHMETIC(base, baseType, alt, *) \
 FN_DEC_OPERATOR_ARITHMETIC(base, baseType, alt, /)
 
-#define FN_DEC_COMMON(base, baseType) \
-FN_DEC_OPERATORS(base, baseType, float) \
-FN_DEC_OPERATORS(base, baseType, double) \
-FN_DEC_OPERATORS(base, baseType, int) \
+#define FN_DEC_COMMON(base, baseType)          \
+FN_DEC_OPERATORS(base, baseType, float)        \
+FN_DEC_OPERATORS(base, baseType, double)       \
+FN_DEC_OPERATORS(base, baseType, int)          \
 FN_DEC_OPERATORS(base, baseType, unsigned int) \
-FN_DEC_OPERATORS(base, baseType, Vec2) \
-FN_DEC_OPERATORS(base, baseType, Vec3) \
-FN_DEC_OPERATORS(base, baseType, Vec4) \
-FN_DEC_OPERATORS(base, baseType, Vec2D) \
-FN_DEC_OPERATORS(base, baseType, Vec3D) \
-FN_DEC_OPERATORS(base, baseType, Vec4D) \
-FN_DEC_OPERATORS(base, baseType, Vec2I) \
-FN_DEC_OPERATORS(base, baseType, Vec3I) \
-FN_DEC_OPERATORS(base, baseType, Vec4I) \
-FN_DEC_OPERATORS(base, baseType, Vec2U) \
-FN_DEC_OPERATORS(base, baseType, Vec3U) \
-FN_DEC_OPERATORS(base, baseType, Vec4U) \
-inline float Magnitude() const; \
-inline base Normal() const; \
+FN_DEC_OPERATORS(base, baseType, Vec2)         \
+FN_DEC_OPERATORS(base, baseType, Vec3)         \
+FN_DEC_OPERATORS(base, baseType, Vec4)         \
+FN_DEC_OPERATORS(base, baseType, Vec2D)        \
+FN_DEC_OPERATORS(base, baseType, Vec3D)        \
+FN_DEC_OPERATORS(base, baseType, Vec4D)        \
+FN_DEC_OPERATORS(base, baseType, Vec2I)        \
+FN_DEC_OPERATORS(base, baseType, Vec3I)        \
+FN_DEC_OPERATORS(base, baseType, Vec4I)        \
+FN_DEC_OPERATORS(base, baseType, Vec2U)        \
+FN_DEC_OPERATORS(base, baseType, Vec3U)        \
+FN_DEC_OPERATORS(base, baseType, Vec4U)        \
+inline base operator -() const;                \
+inline float Magnitude() const;                \
+inline base Normal() const;                    \
 inline base& Normalize();\
 
 #define DEF_VEC_2(baseType, suffix)                                   \
@@ -163,12 +164,13 @@ DEF_VEC_4(unsigned int, U)
 // Arithmetic operators
 
 #define FN_DEF_OPERATOR_ARITHMETIC_2_1(base, baseType, alt, symbol)\
-base  base::operator symbol (const alt other) const { return base{ x symbol (baseType)other, y symbol (baseType)other }; } \
-base& base::operator symbol##= (const alt other) {  x symbol##=(baseType)other; y symbol##=(baseType)other; return *this; }
+base  base::operator symbol (const alt& other) const { return base{ x symbol (baseType)other, y symbol (baseType)other }; }  \
+base& base::operator symbol##= (const alt& other) {  x symbol##=(baseType)other; y symbol##=(baseType)other; return *this; } \
+inline base operator symbol(const alt& other, const base& vec) { return vec symbol other; }
 
 #define FN_DEF_OPERATOR_ARITHMETIC_2_2(base, baseType, alt, symbol)\
-base  base::operator symbol (const alt other) const { return base{ x symbol (baseType)other.x, y symbol (baseType)other.y }; } \
-base& base::operator symbol##= (const alt other) {  x symbol##=(baseType)other.x; y symbol##=(baseType)other.y; return *this; }
+base  base::operator symbol (const alt& other) const { return base{ x symbol (baseType)other.x, y symbol (baseType)other.y }; } \
+base& base::operator symbol##= (const alt& other) {  x symbol##=(baseType)other.x; y symbol##=(baseType)other.y; return *this; }
 
 #define FN_DEF_OPERATOR_ARITHMETIC_2_3(base, baseType, alt, symbol) FN_DEF_OPERATOR_ARITHMETIC_2_2(base, baseType, alt, symbol)
 #define FN_DEF_OPERATOR_ARITHMETIC_2_4(base, baseType, alt, symbol) FN_DEF_OPERATOR_ARITHMETIC_2_2(base, baseType, alt, symbol)
@@ -176,6 +178,10 @@ base& base::operator symbol##= (const alt other) {  x symbol##=(baseType)other.x
 // Common
 
 #define FN_DEF_COMMON_2(base, baseType)                \
+base base::operator -() const                          \
+{                                                      \
+  return base{ -x, -y };                               \
+}                                                      \
 float base::Magnitude() const                          \
 {                                                      \
   return (float)sqrt((x * x) + (y * y));               \
@@ -199,20 +205,25 @@ base& base::Normalize()                                \
 // Arithmetic operators
 
 #define FN_DEF_OPERATOR_ARITHMETIC_3_1(base, baseType, alt, symbol)\
-base  base::operator symbol (const alt other) const { return base{ x symbol (baseType)other, y symbol (baseType)other, z symbol (baseType)other }; } \
-base& base::operator symbol##= (const alt other) {  x symbol##=(baseType)other; y symbol##=(baseType)other; z symbol##=(baseType)other; return *this; }
+base  base::operator symbol (const alt& other) const { return base{ x symbol (baseType)other, y symbol (baseType)other, z symbol (baseType)other }; }    \
+base& base::operator symbol##= (const alt& other) {  x symbol##=(baseType)other; y symbol##=(baseType)other; z symbol##=(baseType)other; return *this; } \
+inline base operator symbol(const alt& other, const base& vec) { return vec symbol other; }
 
 #define FN_DEF_OPERATOR_ARITHMETIC_3_2(base, baseType, alt, symbol) FN_DEF_OPERATOR_ARITHMETIC_2_2(base, baseType, alt, symbol)
 
 #define FN_DEF_OPERATOR_ARITHMETIC_3_3(base, baseType, alt, symbol)\
-base  base::operator symbol (const alt other) const { return base{ x symbol (baseType)other.x, y symbol (baseType)other.y, z symbol (baseType)other.z }; } \
-base& base::operator symbol##= (const alt other) {  x symbol##=(baseType)other.x; y symbol##=(baseType)other.y; z symbol##=(baseType)other.z; return *this; }
+base  base::operator symbol (const alt& other) const { return base{ x symbol (baseType)other.x, y symbol (baseType)other.y, z symbol (baseType)other.z }; } \
+base& base::operator symbol##= (const alt& other) {  x symbol##=(baseType)other.x; y symbol##=(baseType)other.y; z symbol##=(baseType)other.z; return *this; }
 
 #define FN_DEF_OPERATOR_ARITHMETIC_3_4(base, baseType, alt, symbol) FN_DEF_OPERATOR_ARITHMETIC_3_3(base, baseType, alt, symbol)
 
 // Common
 
 #define FN_DEF_COMMON_3(base, baseType)                                   \
+base base::operator -() const                                             \
+{                                                                         \
+  return base{ -x, -y, -z };                                              \
+}                                                                         \
 float base::Magnitude() const                                             \
 {                                                                         \
   return (float)sqrt((x * x) + (y * y) + (z * z));                        \
@@ -237,20 +248,25 @@ base& base::Normalize()                                                   \
 // Arithmetic operators
 
 #define FN_DEF_OPERATOR_ARITHMETIC_4_1(base, baseType, alt, symbol)\
-base  base::operator symbol (const alt other) const { return base{ x symbol (baseType)other, y symbol (baseType)other, z symbol (baseType)other, w symbol (baseType)other }; } \
-base& base::operator symbol##= (const alt other) {  x symbol##=(baseType)other; y symbol##=(baseType)other; z symbol##=(baseType)other; w symbol##=(baseType)other; return *this; }
+base  base::operator symbol (const alt& other) const { return base{ x symbol (baseType)other, y symbol (baseType)other, z symbol (baseType)other, w symbol (baseType)other }; }      \
+base& base::operator symbol##= (const alt& other) {  x symbol##=(baseType)other; y symbol##=(baseType)other; z symbol##=(baseType)other; w symbol##=(baseType)other; return *this; } \
+inline base operator symbol(const alt& other, const base& vec) { return vec symbol other; }
 
 #define FN_DEF_OPERATOR_ARITHMETIC_4_2(base, baseType, alt, symbol) FN_DEF_OPERATOR_ARITHMETIC_2_2(base, baseType, alt, symbol)
 #define FN_DEF_OPERATOR_ARITHMETIC_4_3(base, baseType, alt, symbol) FN_DEF_OPERATOR_ARITHMETIC_3_3(base, baseType, alt, symbol)
 
 #define FN_DEF_OPERATOR_ARITHMETIC_4_4(base, baseType, alt, symbol)\
-base  base::operator symbol (const alt other) const { return base{ x symbol (baseType)other.x, y symbol (baseType)other.y, z symbol (baseType)other.z, w symbol (baseType)other.w }; } \
-base& base::operator symbol##= (const alt other) {  x symbol##=(baseType)other.x; y symbol##=(baseType)other.y; z symbol##=(baseType)other.z; w symbol##=(baseType)other.w; return *this; }
+base  base::operator symbol (const alt& other) const { return base{ x symbol (baseType)other.x, y symbol (baseType)other.y, z symbol (baseType)other.z, w symbol (baseType)other.w }; } \
+base& base::operator symbol##= (const alt& other) {  x symbol##=(baseType)other.x; y symbol##=(baseType)other.y; z symbol##=(baseType)other.z; w symbol##=(baseType)other.w; return *this; }
 
 
 // Common
 
 #define FN_DEF_COMMON_4(base, baseType)                                                      \
+inline base base::operator -() const                                                         \
+{                                                                                            \
+  return base{ -x, -y, -z, -w };                                                             \
+}                                                                                            \
 float base::Magnitude() const                                                                \
 {                                                                                            \
   return (float)sqrt((x * x) + (y * y) + (z * z) + (w * w));                                 \
@@ -273,13 +289,13 @@ base& base::Normalize()                                                         
 // XXX
 // ============================================================
 
-#define FN_DEF_COL_OPERATOR_ARITHMETIC(base, baseType, count, alt, altType, altCount)\
-FN_DEF_OPERATOR_ARITHMETIC_##count##_##altCount (base, baseType, alt, +)\
-FN_DEF_OPERATOR_ARITHMETIC_##count##_##altCount (base, baseType, alt, -)\
-FN_DEF_OPERATOR_ARITHMETIC_##count##_##altCount (base, baseType, alt, *)\
+#define FN_DEF_COL_OPERATOR_ARITHMETIC(base, baseType, count, alt, altType, altCount) \
+FN_DEF_OPERATOR_ARITHMETIC_##count##_##altCount (base, baseType, alt, +)              \
+FN_DEF_OPERATOR_ARITHMETIC_##count##_##altCount (base, baseType, alt, -)              \
+FN_DEF_OPERATOR_ARITHMETIC_##count##_##altCount (base, baseType, alt, *)              \
 FN_DEF_OPERATOR_ARITHMETIC_##count##_##altCount (base, baseType, alt, /)
 
-#define DUPLICATE_FOR_ALL(thing, base, baseType, count)\
+#define DUPLICATE_FOR_ALL(thing, base, baseType, count)     \
 thing(base, baseType, count, float,        float,        1) \
 thing(base, baseType, count, double,       double,       1) \
 thing(base, baseType, count, int,          int,          1) \
@@ -297,8 +313,8 @@ thing(base, baseType, count, Vec4D,        double,       4) \
 thing(base, baseType, count, Vec4I,        int,          4) \
 thing(base, baseType, count, Vec4U,        unsigned int, 4)
 
-#define FN_DEF_VEC(base, baseType, count)\
-DUPLICATE_FOR_ALL(FN_DEF_COL_OPERATOR_ARITHMETIC, base, baseType, count)\
+#define FN_DEF_VEC(base, baseType, count)                                \
+DUPLICATE_FOR_ALL(FN_DEF_COL_OPERATOR_ARITHMETIC, base, baseType, count) \
 FN_DEF_COMMON_##count(base, baseType)
 
 FN_DEF_VEC(Vec2, float, 2);
