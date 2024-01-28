@@ -1,9 +1,11 @@
 
 #ifndef GEM_PERIDOT_MATRIX_HPP_
 #define GEM_PERIDOT_MATRIX_HPP_
-#ifndef PERIDOT_C
 
 #include "peridot_defines.h"
+
+#ifndef PERIDOT_C
+
 #include "peridot_vector.hpp"
 
 class Mat4

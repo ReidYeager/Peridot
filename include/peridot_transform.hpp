@@ -1,9 +1,11 @@
 
 #ifndef GEM_PERIDOT_TRANSFORM_HPP_
 #define GEM_PERIDOT_TRANSFORM_HPP_
-#ifndef PERIDOT_C
 
 #include "peridot_defines.h"
+
+#ifndef PERIDOT_C
+
 #include "peridot_vector.hpp"
 #include "peridot_matrix.hpp"
 #include "peridot_quaternion.hpp"
