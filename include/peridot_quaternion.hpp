@@ -159,11 +159,7 @@ private:
   }
 };
 
-#ifdef __clang__
-#define quaternionIdentity (Quaternion){ 0.0f, 0.0f, 0.0f, 1.0f }
-#else
-#define quaternionIdentity { 0.0f, 0.0f, 0.0f, 1.0f }
-#endif
+#define QuaternionIdentity Quaternion{ 0.0f, 0.0f, 0.0f, 1.0f }
 
 #endif // !PERIDOT_C
 #endif // !GEM_PERIDOT_QUATERNION_HPP_

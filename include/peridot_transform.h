@@ -15,15 +15,9 @@ typedef struct Transform
   Vec3 scale;
 } Transform;
 
-#ifdef __clang__
-#define transformIdentity (Transform){ { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } }
-#else
-#define transformIdentity { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } }
-#endif
-
 inline Mat4 TransformToMat4(Transform _transform)
 {
-  Mat4 newMat = mat4Identity;
+  Mat4 newMat = Mat4Identity;
 
   newMat.col0.x *= _transform.scale.x;
   newMat.col1.y *= _transform.scale.y;
@@ -38,6 +32,8 @@ inline Mat4 TransformToMat4(Transform _transform)
 
   return newMat;
 }
+
+#define TransformIdentity Transform{ { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } }
 
 #endif // PERIDOT_C
 #endif // !GEM_PERIDOT_TRANSFORM_H_

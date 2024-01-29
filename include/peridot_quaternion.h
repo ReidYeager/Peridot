@@ -9,12 +9,6 @@
 
 typedef Vec4 Quaternion;
 
-#ifdef __clang__
-#define quaternionIdentity (Quaternion){ 0.0f, 0.0f, 0.0f, 1.0f }
-#else
-#define quaternionIdentity { 0.0f, 0.0f, 0.0f, 1.0f }
-#endif
-
 inline Quaternion QuaternionMultiplyQuaternion(Quaternion _left, Quaternion _right);
 inline Quaternion QuaternionNormalize(Quaternion _quaternion);
 
@@ -128,6 +122,8 @@ inline Vec3 QuaternionMultiplyVec3(Quaternion _quaternion, Vec3 _vector)
   Mat4 qMat = QuaternionToMat4(_quaternion);
   return Mat4MultiplyVec3(qMat, _vector);
 }
+
+#define QuaternionIdentity Quaternion{ 0.0f, 0.0f, 0.0f, 1.0f }
 
 #endif // PERIDOT_C
 #endif // !GEM_PERIDOT_QUATERNION_H_

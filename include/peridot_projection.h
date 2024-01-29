@@ -58,7 +58,7 @@ inline Mat4 ProjectionOrthographic(float _width, float _height, float _near, flo
   float top = -hheight;
   float bottom = hheight;
 
-  Mat4 newMat = mat4Identity;
+  Mat4 newMat = Mat4Identity;
   newMat.x.x = 2 / (right - left);
   newMat.y.y = 2 / (top - bottom);
   newMat.z.z = -2 / (_far - _near);

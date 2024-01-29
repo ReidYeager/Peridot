@@ -19,7 +19,7 @@ public:
 
   inline Mat4 Matrix() const
   {
-    Mat4 newMat(1.0f);
+    Mat4 newMat = Mat4Identity;
 
     newMat.col0.x *= scale.x;
     newMat.col1.y *= scale.y;
@@ -35,6 +35,8 @@ public:
     return newMat;
   }
 };
+
+#define TransformIdentity Transform{ { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } }
 
 #endif // !PERIDOT_C
 #endif // !GEM_PERIDOT_TRANSFORM_HPP_

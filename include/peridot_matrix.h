@@ -18,22 +18,6 @@ typedef union Mat4
   };
 } Mat4;
 
-#ifdef __clang__
-#define mat4Identity (Mat4) { \
-  1.0f, 0.0f, 0.0f, 0.0f,     \
-  0.0f, 1.0f, 0.0f, 0.0f,     \
-  0.0f, 0.0f, 1.0f, 0.0f,     \
-  0.0f, 0.0f, 0.0f, 1.0f      \
-}
-#else
-#define mat4Identity {    \
-  1.0f, 0.0f, 0.0f, 0.0f, \
-  0.0f, 1.0f, 0.0f, 0.0f, \
-  0.0f, 0.0f, 1.0f, 0.0f, \
-  0.0f, 0.0f, 0.0f, 1.0f  \
-}
-#endif
-
 inline Mat4 Mat4FromElementArray(float* _elements, bool _inputIsRowMajor)
 {
   Mat4 newMat = { 0 };
@@ -343,6 +327,13 @@ inline Mat4 Mat4Invert(Mat4 _matrix)
     newMat = Mat4MultiplyFloat(newMat, (float)determinant);
 
     return newMat;
+}
+
+#define Mat4Identity Mat4{ \
+  1.0f, 0.0f, 0.0f, 0.0f,  \
+  0.0f, 1.0f, 0.0f, 0.0f,  \
+  0.0f, 0.0f, 1.0f, 0.0f,  \
+  0.0f, 0.0f, 0.0f, 1.0f   \
 }
 
 #endif // PERIDOT_C

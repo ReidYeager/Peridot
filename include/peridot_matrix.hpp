@@ -318,21 +318,12 @@ public:
 
 };
 
-#ifdef __clang__
-#define mat4Identity (Mat4) { \
-  1.0f, 0.0f, 0.0f, 0.0f,     \
-  0.0f, 1.0f, 0.0f, 0.0f,     \
-  0.0f, 0.0f, 1.0f, 0.0f,     \
-  0.0f, 0.0f, 0.0f, 1.0f      \
+#define Mat4Identity Mat4{ \
+  1.0f, 0.0f, 0.0f, 0.0f,  \
+  0.0f, 1.0f, 0.0f, 0.0f,  \
+  0.0f, 0.0f, 1.0f, 0.0f,  \
+  0.0f, 0.0f, 0.0f, 1.0f   \
 }
-#else
-#define mat4Identity {    \
-  1.0f, 0.0f, 0.0f, 0.0f, \
-  0.0f, 1.0f, 0.0f, 0.0f, \
-  0.0f, 0.0f, 1.0f, 0.0f, \
-  0.0f, 0.0f, 0.0f, 1.0f  \
-}
-#endif
 
 #endif // !PERIDOT_C
 #endif // !GEM_PERIDOT_MATRIX_HPP_
