@@ -63,14 +63,8 @@ public:                                                               \
   Vec2##suffix(Vec2##suffix& other) : x(other.x), y(other.y) {}       \
   Vec2##suffix(const Vec2##suffix& other) : x(other.x), y(other.y) {} \
   __FN_DEC_COMMON(Vec2##suffix, baseType)                             \
-  inline bool operator==(const Vec2##suffix& other) const             \
-  {                                                                   \
-    return x == other.x && y == other.y;                              \
-  }                                                                   \
-  inline float Dot(const Vec2##suffix& other) const                   \
-  {                                                                   \
-    return float((x * other.x) + (y * other.y));                      \
-  }                                                                   \
+  inline bool operator==(const Vec2##suffix& other) const;             \
+  inline float Dot(const Vec2##suffix& other) const;                   \
 };
 
 #define __DEF_VEC_3(baseType, suffix)                                                \
@@ -91,32 +85,11 @@ public:                                                                         
   Vec3##suffix(Vec3##suffix& other) : x(other.x), y(other.y), z(other.z) {}          \
   Vec3##suffix(const Vec3##suffix& other) : x(other.x), y(other.y), z(other.z) {}    \
   __FN_DEC_COMMON(Vec3##suffix, baseType)                                            \
-  inline bool operator==(const Vec3##suffix& other) const                            \
-  {                                                                                  \
-    return x == other.x && y == other.y && z == other.z;                             \
-  }                                                                                  \
-  inline float Dot(const Vec3##suffix& other) const                                  \
-  {                                                                                  \
-    return float((x * other.x) + (y * other.y) + (z * other.z));                     \
-  }                                                                                  \
-  inline Vec3##suffix Cross(const Vec3##suffix& other)   const                       \
-  {                                                                                  \
-    return Vec3##suffix {                                                            \
-      y * other.z - z * other.y,                                                     \
-      z * other.x - x * other.z,                                                     \
-      x * other.y - y * other.x };                                                   \
-  }                                                                                  \
-  inline float Angle(const Vec3##suffix& other)   const                              \
-  {                                                                                  \
-    float angle = Dot(other);                                                        \
-    angle /= (Magnitude() * other.Magnitude());                                      \
-    return acosf(angle);                                                             \
-  }                                                                                  \
-  inline Vec3##suffix Project(const Vec3##suffix& other) const                       \
-  {                                                                                  \
-    Vec3##suffix p = other.Normal();                                                 \
-    return p * Dot(other);                                                           \
-  }                                                                                  \
+  inline bool operator==(const Vec3##suffix& other) const;                           \
+  inline float Dot(const Vec3##suffix& other) const;                                 \
+  inline float Angle(const Vec3##suffix& other) const;                               \
+  inline Vec3##suffix Cross(const Vec3##suffix& other) const;                        \
+  inline Vec3##suffix Project(const Vec3##suffix& other) const;                      \
 };
 
 #define __DEF_VEC_4(baseType, suffix)                                                                      \
@@ -138,14 +111,8 @@ public:                                                                         
   Vec4##suffix(Vec4##suffix& other) : x(other.x), y(other.y), z(other.z), w(other.w) {}                    \
   Vec4##suffix(const Vec4##suffix& other) : x(other.x), y(other.y), z(other.z), w(other.w) {}              \
   __FN_DEC_COMMON(Vec4##suffix, baseType)                                                                  \
-  inline bool operator==(const Vec4##suffix& other) const                                                  \
-  {                                                                                                        \
-    return x == other.x && y == other.y && z == other.z && w == other.w;                                   \
-  }                                                                                                        \
-  inline float Dot(const Vec4##suffix& other) const                                                        \
-  {                                                                                                        \
-    return float((x * other.x) + (y * other.y) + (z * other.z) + (w * other.w));                           \
-  }                                                                                                        \
+  inline bool operator==(const Vec4##suffix& other) const;                                                  \
+  inline float Dot(const Vec4##suffix& other) const;                                                        \
 };
 
 __DEF_VEC_2(float,)
@@ -228,6 +195,18 @@ base& base::Normalize()                                \
   x /= mag;                                            \
   y /= mag;                                            \
   return *this;                                        \
+}                                                      \
+inline bool base::operator==(const base& other) const  \
+{                                                      \
+  return x == other.x && y == other.y;                 \
+}                                                      \
+inline float base::Dot(const base& other) const        \
+{                                                      \
+  return float((x * other.x) + (y * other.y));         \
+}                                                      \
+float Dot(const base& left, const base& right)         \
+{                                                      \
+  return left.Dot(right);                              \
 }
 
 // Vec3
@@ -280,6 +259,43 @@ base& base::Normalize()                                                   \
   y /= mag;                                                               \
   z /= mag;                                                               \
   return *this;                                                           \
+}                                                                         \
+inline bool base::operator==(const base& other) const                     \
+{                                                                         \
+  return x == other.x && y == other.y && z == other.z;                    \
+}                                                                         \
+inline float base::Dot(const base& other) const                           \
+{                                                                         \
+  return float((x * other.x) + (y * other.y) + (z * other.z));            \
+}                                                                         \
+inline base base::Cross(const base& other) const                          \
+{                                                                         \
+  return base{                                                            \
+    y * other.z - z * other.y,                                            \
+    z * other.x - x * other.z,                                            \
+    x * other.y - y * other.x };                                          \
+}                                                                         \
+inline float base::Angle(const base& other) const                         \
+{                                                                         \
+  float angle = Dot(other);                                               \
+  angle /= (Magnitude() * other.Magnitude());                             \
+  return acosf(angle);                                                    \
+}                                                                         \
+inline base base::Project(const base& other) const                        \
+{                                                                         \
+  base p = other.Normal();                                                \
+  return p * Dot(other);                                                  \
+}                                                                         \
+float Dot(const base& left, const base& right)                            \
+{                                                                         \
+  return left.Dot(right);                                                 \
+}                                                                         \
+inline base Cross(const base& left, const base& right)                    \
+{                                                                         \
+  return base{                                                            \
+    left.y * right.z - left.z * right.y,                                  \
+    left.z * right.x - left.x * right.z,                                  \
+    left.x * right.y - left.y * right.x };                                \
 }
 
 // Vec4
@@ -333,6 +349,18 @@ base& base::Normalize()                                                         
   z /= mag;                                                                                  \
   w /= mag;                                                                                  \
   return *this;                                                                              \
+}                                                                                            \
+inline bool base::operator==(const base& other) const                                        \
+{                                                                                            \
+  return x == other.x && y == other.y && z == other.z && w == other.w;                       \
+}                                                                                            \
+inline float base::Dot(const base& other) const                                              \
+{                                                                                            \
+  return float((x * other.x) + (y * other.y) + (z * other.z) + (w * other.w));               \
+}                                                                                            \
+float Dot(const base& left, const base& right)                                               \
+{                                                                                            \
+  return left.Dot(right);                                                                    \
 }
 
 // XXX
