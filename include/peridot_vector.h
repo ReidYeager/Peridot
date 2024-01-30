@@ -6,6 +6,7 @@
 #include "peridot_defines.h"
 
 #include <math.h>
+#include <assert.h>
 
 #define PERI_DEF_VEC2(type, typeshort) \
 typedef union Vec2##typeshort          \
@@ -91,8 +92,7 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  if (_b == 0)                                                      \
-    return _a;                                                      \
+  assert(_b && "Divide by zero");                                   \
   base f = {                                                        \
     (basePrim)(_a.x / _b),                                          \
     (basePrim)(_a.y / _b) };                                        \
@@ -123,8 +123,7 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  if (_b.x == 0 || _b.y == 0)                                       \
-    return _a;                                                      \
+  assert(_b.x && _b.y && "Divide by zero");                         \
   base f = {                                                        \
     (basePrim)(_a.x / _b.x),                                        \
     (basePrim)(_a.y / _b.y) };                                      \
@@ -191,8 +190,7 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  if (_b == 0)                                                      \
-    return _a;                                                      \
+  assert(_b && "Divide by zero");                                   \
   base f = {                                                        \
     (basePrim)(_a.x / _b),                                          \
     (basePrim)(_a.y / _b),                                          \
@@ -227,8 +225,7 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  if (_b.x == 0 || _b.y == 0)                                       \
-    return _a;                                                      \
+  assert(_b.x && _b.y && "Divide by zero");                         \
   base f = {                                                        \
     (basePrim)(_a.x / _b.x),                                        \
     (basePrim)(_a.y / _b.y),                                        \
@@ -263,8 +260,7 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  if (_b.x == 0 || _b.y == 0 || _b.z == 0)                          \
-    return _a;                                                      \
+  assert(_b.x && _b.y && _b.z && "Divide by zero");                 \
   base f = {                                                        \
     (basePrim)(_a.x / _b.x),                                        \
     (basePrim)(_a.y / _b.y),                                        \
@@ -351,8 +347,7 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  if (_b == 0)                                                      \
-    return _a;                                                      \
+  assert(_b && "Divide by zero");                                   \
   base f = {                                                        \
     (basePrim)(_a.x / _b),                                          \
     (basePrim)(_a.y / _b),                                          \
@@ -391,8 +386,7 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  if (_b.x == 0 || _b.y == 0)                                       \
-    return _a;                                                      \
+  assert(_b.x && _b.y && "Divide by zero");                         \
   base f = {                                                        \
     (basePrim)(_a.x / _b.x),                                        \
     (basePrim)(_a.y / _b.y),                                        \
@@ -431,8 +425,7 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  if (_b.x == 0 || _b.y == 0 || _b.z == 0)                          \
-    return _a;                                                      \
+  assert(_b.x && _b.y && _b.z && "Divide by zero");                 \
   base f = {                                                        \
     (basePrim)(_a.x / _b.x),                                        \
     (basePrim)(_a.y / _b.y),                                        \
@@ -471,8 +464,7 @@ inline base base##Multiply##alt(base _a, altType _b)                \
 }                                                                   \
 inline base base##Divide##alt(base _a, altType _b)                  \
 {                                                                   \
-  if (_b.x == 0 || _b.y == 0 || _b.z == 0 || _b.w == 0)             \
-    return _a;                                                      \
+  assert(_b.x && _b.y && _b.z && _b.w && "Divide by zero");         \
   base f = {                                                        \
     (basePrim)(_a.x / _b.x),                                        \
     (basePrim)(_a.y / _b.y),                                        \

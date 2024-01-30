@@ -6,6 +6,10 @@
 
 #ifndef PERIDOT_C
 
+#ifndef PERIDOT_NO_NAMESPACE
+namespace Pdt {
+#endif // !PERIDOT_NO_NAMESPACE
+
 #include <assert.h>
 #include <math.h>
 
@@ -131,43 +135,100 @@ __DEF_VEC_4(unsigned int, U)
 // Scalars
 // ============================================================
 
-#define __FN_DEF_OPERATOR_ARITHMETIC_1_2(base, baseType, alt, symbol)                                                                           \
-inline base  operator symbol (const alt& other, const base& vec) { return base{ (baseType)other symbol vec.x, (baseType)other symbol vec.y }; }
-#define __FN_DEF_OPERATOR_DIVIDE_1_2(base, baseType, alt)                                                                                              \
-inline base  operator/(const alt& other, const base& vec) { assert(vec.x && vec.y); return base{ (baseType)other / vec.x, (baseType)other / vec.y }; }
+#define __FN_DEF_OPERATOR_ARITHMETIC_1_2(base, baseType, alt, symbol)        \
+inline base  operator symbol (const alt& other, const base& vec)             \
+{                                                                            \
+  return base{ (baseType)other symbol vec.x, (baseType)other symbol vec.y }; \
+}
+#define __FN_DEF_OPERATOR_DIVIDE_1_2(base, baseType, alt)          \
+inline base  operator/(const alt& other, const base& vec)          \
+{                                                                  \
+  assert(vec.x && vec.y && "Divide by zero");                      \
+  return base{ (baseType)other / vec.x, (baseType)other / vec.y }; \
+}
 
-#define __FN_DEF_OPERATOR_ARITHMETIC_1_3(base, baseType, alt, symbol)                                                                                                         \
-inline base  operator symbol (const alt& other, const base& vec) { return base{ (baseType)other symbol vec.x, (baseType)other symbol vec.y, (baseType)other symbol vec.z }; }
-#define __FN_DEF_OPERATOR_DIVIDE_1_3(base, baseType, alt)                                                                                                                                \
-inline base  operator/(const alt& other, const base& vec) { assert(vec.x && vec.y && vec.z); return base{ (baseType)other / vec.x, (baseType)other / vec.y, (baseType)other / vec.z }; }
+#define __FN_DEF_OPERATOR_ARITHMETIC_1_3(base, baseType, alt, symbol)                                      \
+inline base  operator symbol (const alt& other, const base& vec)                                           \
+{                                                                                                          \
+  return base{ (baseType)other symbol vec.x, (baseType)other symbol vec.y, (baseType)other symbol vec.z }; \
+}
+#define __FN_DEF_OPERATOR_DIVIDE_1_3(base, baseType, alt)                                   \
+inline base  operator/(const alt& other, const base& vec)                                   \
+{                                                                                           \
+  assert(vec.x && vec.y && vec.z && "Divide by zero");                                      \
+  return base{ (baseType)other / vec.x, (baseType)other / vec.y, (baseType)other / vec.z }; \
+}
 
-#define __FN_DEF_OPERATOR_ARITHMETIC_1_4(base, baseType, alt, symbol)                                                                                                                                       \
-inline base  operator symbol (const alt& other, const base& vec) { return base{ (baseType)other symbol vec.x, (baseType)other symbol vec.y, (baseType)other symbol vec.z, (baseType)other symbol vec.w }; }
-#define __FN_DEF_OPERATOR_DIVIDE_1_4(base, baseType, alt)                                                                                                                                                                  \
-inline base  operator/(const alt& other, const base& vec) { assert(vec.x && vec.y && vec.z && vec.w); return base{ (baseType)other / vec.x, (baseType)other / vec.y, (baseType)other / vec.z, (baseType)other / vec.w }; }
+#define __FN_DEF_OPERATOR_ARITHMETIC_1_4(base, baseType, alt, symbol)                                                                    \
+inline base  operator symbol (const alt& other, const base& vec)                                                                         \
+{                                                                                                                                        \
+  return base{ (baseType)other symbol vec.x, (baseType)other symbol vec.y, (baseType)other symbol vec.z, (baseType)other symbol vec.w }; \
+}
+#define __FN_DEF_OPERATOR_DIVIDE_1_4(base, baseType, alt)                                                            \
+inline base  operator/(const alt& other, const base& vec)                                                            \
+{                                                                                                                    \
+  assert(vec.x && vec.y && vec.z && vec.w && "Divide by zero");                                                      \
+  return base{ (baseType)other / vec.x, (baseType)other / vec.y, (baseType)other / vec.z, (baseType)other / vec.w }; \
+}
 
 // Vec2
 // ============================================================
 
 // Arithmetic operators
 
-#define __FN_DEF_OPERATOR_ARITHMETIC_2_1(base, baseType, alt, symbol)                                                                \
-inline base  base::operator symbol (const alt& other) const { return base{ x symbol (baseType)other, y symbol (baseType)other }; }   \
-inline base& base::operator symbol##= (const alt& other) { x symbol##= (baseType)other; y symbol##= (baseType)other; return *this; }
+#define __FN_DEF_OPERATOR_ARITHMETIC_2_1(base, baseType, alt, symbol) \
+inline base  base::operator symbol (const alt& other) const           \
+{                                                                     \
+  return base{ x symbol (baseType)other, y symbol (baseType)other };  \
+}                                                                     \
+inline base& base::operator symbol##= (const alt& other)              \
+{                                                                     \
+  x symbol##= (baseType)other;                                        \
+  y symbol##= (baseType)other;                                        \
+  return *this;                                                       \
+}
 
-#define __FN_DEF_OPERATOR_DIVIDE_2_1(base, baseType, alt)                                                                          \
-inline base  base::operator / (const alt& other) const { assert(other); return base{ x / (baseType)other, y / (baseType)other }; } \
-inline base& base::operator /= (const alt& other) { assert(other); x /= (baseType)other; y /= (baseType)other; return *this; }
+#define __FN_DEF_OPERATOR_DIVIDE_2_1(base, baseType, alt)  \
+inline base  base::operator / (const alt& other) const     \
+{                                                          \
+  assert(other && "Divide by zero");                       \
+  return base{ x / (baseType)other, y / (baseType)other }; \
+}                                                          \
+inline base& base::operator /= (const alt& other)          \
+{                                                          \
+  assert(other && "Divide by zero");                       \
+  x /= (baseType)other;                                    \
+  y /= (baseType)other;                                    \
+  return *this;                                            \
+}
 
-#define __FN_DEF_OPERATOR_ARITHMETIC_2_2(base, baseType, alt, symbol)                                                                    \
-inline base  base::operator symbol (const alt& other) const { return base{ x symbol (baseType)other.x, y symbol (baseType)other.y }; }   \
-inline base& base::operator symbol##= (const alt& other) { x symbol##= (baseType)other.x; y symbol##= (baseType)other.y; return *this; }
+#define __FN_DEF_OPERATOR_ARITHMETIC_2_2(base, baseType, alt, symbol)    \
+inline base  base::operator symbol (const alt& other) const              \
+{                                                                        \
+  return base{ x symbol (baseType)other.x, y symbol (baseType)other.y }; \
+}                                                                        \
+inline base& base::operator symbol##= (const alt& other)                 \
+{                                                                        \
+  x symbol##= (baseType)other.x;                                         \
+  y symbol##= (baseType)other.y;                                         \
+  return *this;                                                          \
+}
 
-#define __FN_DEF_OPERATOR_DIVIDE_2_2(base, baseType, alt)                                                                                           \
-inline base  base::operator / (const alt& other) const { assert(other.x && other.y); return base{ x / (baseType)other.x, y / (baseType)other.y }; } \
-inline base& base::operator /= (const alt& other) { assert(other.x && other.y); x /= (baseType)other.x; y /= (baseType)other.y; return *this; }
+#define __FN_DEF_OPERATOR_DIVIDE_2_2(base, baseType, alt)      \
+inline base  base::operator / (const alt& other) const         \
+{                                                              \
+  assert(other.x && other.y && "Divide by zero");              \
+  return base{ x / (baseType)other.x, y / (baseType)other.y }; \
+}                                                              \
+inline base& base::operator /= (const alt& other)              \
+{                                                              \
+  assert(other.x && other.y && "Divide by zero");              \
+  x /= (baseType)other.x;                                      \
+  y /= (baseType)other.y;                                      \
+  return *this;                                                \
+}
 
-#define __FN_DEF_OPERATOR_ARITHMETIC_2_3(base, baseType, alt, symbol) __FN_DEF_OPERATOR_ARITHMETIC_2_2(base, baseType, alt, symbol)
+#define __FN_DEF_OPERATOR_ARITHMETIC_2_3(base, baseType, alt, symbol)__FN_DEF_OPERATOR_ARITHMETIC_2_2(base, baseType, alt, symbol)
 #define __FN_DEF_OPERATOR_ARITHMETIC_2_4(base, baseType, alt, symbol) __FN_DEF_OPERATOR_ARITHMETIC_2_2(base, baseType, alt, symbol)
 
 #define __FN_DEF_OPERATOR_DIVIDE_2_3(base, baseType, alt) __FN_DEF_OPERATOR_DIVIDE_2_2(base, baseType, alt)
@@ -192,8 +253,7 @@ base base::Normal() const                              \
 base& base::Normalize()                                \
 {                                                      \
   float mag = Magnitude();                             \
-  x /= mag;                                            \
-  y /= mag;                                            \
+  *this /= mag;                                        \
   return *this;                                        \
 }                                                      \
 inline bool base::operator==(const base& other) const  \
@@ -214,24 +274,64 @@ float Dot(const base& left, const base& right)         \
 
 // Arithmetic operators
 
-#define __FN_DEF_OPERATOR_ARITHMETIC_3_1(base, baseType, alt, symbol)                                                                                             \
-inline base  base::operator symbol (const alt& other) const { return base{ x symbol (baseType)other, y symbol (baseType)other, z symbol (baseType)other }; }      \
-inline base& base::operator symbol##= (const alt& other) { x symbol##= (baseType)other; y symbol##= (baseType)other; z symbol##= (baseType)other; return *this; } \
+#define __FN_DEF_OPERATOR_ARITHMETIC_3_1(base, baseType, alt, symbol)                          \
+inline base  base::operator symbol (const alt& other) const                                    \
+{                                                                                              \
+  return base{ x symbol (baseType)other, y symbol (baseType)other, z symbol (baseType)other }; \
+}                                                                                              \
+inline base& base::operator symbol##= (const alt& other)                                       \
+{                                                                                              \
+  x symbol##= (baseType)other;                                                                 \
+  y symbol##= (baseType)other;                                                                 \
+  z symbol##= (baseType)other;                                                                 \
+  return *this;                                                                                \
+}
 
-#define __FN_DEF_OPERATOR_DIVIDE_3_1(base, baseType, alt)                                                                                               \
-inline base  base::operator / (const alt& other) const { assert(other); return base{ x / (baseType)other, y / (baseType)other, z / (baseType)other }; } \
-inline base& base::operator /= (const alt& other) { assert(other); x /= (baseType)other; y /= (baseType)other; z /= (baseType)other; return *this; }
+#define __FN_DEF_OPERATOR_DIVIDE_3_1(base, baseType, alt)                       \
+inline base  base::operator / (const alt& other) const                          \
+{                                                                               \
+  assert(other && "Divide by zero");                                            \
+  return base{ x / (baseType)other, y / (baseType)other, z / (baseType)other }; \
+}                                                                               \
+inline base& base::operator /= (const alt& other)                               \
+{                                                                               \
+  assert(other && "Divide by zero");                                            \
+  x /= (baseType)other;                                                         \
+  y /= (baseType)other;                                                         \
+  z /= (baseType)other;                                                         \
+  return *this;                                                                 \
+}
 
 #define __FN_DEF_OPERATOR_ARITHMETIC_3_2(base, baseType, alt, symbol) __FN_DEF_OPERATOR_ARITHMETIC_2_2(base, baseType, alt, symbol)
 #define __FN_DEF_OPERATOR_DIVIDE_3_2(base, baseType, alt) __FN_DEF_OPERATOR_DIVIDE_2_2(base, baseType, alt)
 
-#define __FN_DEF_OPERATOR_ARITHMETIC_3_3(base, baseType, alt, symbol)                                                                                                   \
-inline base  base::operator symbol (const alt& other) const { return base{ x symbol (baseType)other.x, y symbol (baseType)other.y, z symbol (baseType)other.z }; }      \
-inline base& base::operator symbol##= (const alt& other) { x symbol##= (baseType)other.x; y symbol##= (baseType)other.y; z symbol##= (baseType)other.z; return *this; }
+#define __FN_DEF_OPERATOR_ARITHMETIC_3_3(base, baseType, alt, symbol)                                \
+inline base  base::operator symbol (const alt& other) const                                          \
+{                                                                                                    \
+  return base{ x symbol (baseType)other.x, y symbol (baseType)other.y, z symbol (baseType)other.z }; \
+}                                                                                                    \
+inline base& base::operator symbol##= (const alt& other)                                             \
+{                                                                                                    \
+  x symbol##= (baseType)other.x;                                                                     \
+  y symbol##= (baseType)other.y;                                                                     \
+  z symbol##= (baseType)other.z;                                                                     \
+  return *this;                                                                                      \
+}
 
-#define __FN_DEF_OPERATOR_DIVIDE_3_3(base, baseType, alt)                                                                                                                             \
-inline base  base::operator / (const alt& other) const { assert(other.x && other.y && other.z); return base{ x / (baseType)other.x, y / (baseType)other.y, z / (baseType)other.z }; } \
-inline base& base::operator /= (const alt& other) { assert(other.x && other.y && other.z); x /= (baseType)other.x; y /= (baseType)other.y; z /= (baseType)other.z; return *this; }
+#define __FN_DEF_OPERATOR_DIVIDE_3_3(base, baseType, alt)                             \
+inline base  base::operator / (const alt& other) const                                \
+{                                                                                     \
+  assert(other.x && other.y && other.z && "Divide by zero");                          \
+  return base{ x / (baseType)other.x, y / (baseType)other.y, z / (baseType)other.z }; \
+}                                                                                     \
+inline base& base::operator /= (const alt& other)                                     \
+{                                                                                     \
+  assert(other.x && other.y && other.z && "Divide by zero");                          \
+  x /= (baseType)other.x;                                                             \
+  y /= (baseType)other.y;                                                             \
+  z /= (baseType)other.z;                                                             \
+  return *this;                                                                       \
+}
 
 #define __FN_DEF_OPERATOR_ARITHMETIC_3_4(base, baseType, alt, symbol) __FN_DEF_OPERATOR_ARITHMETIC_3_3(base, baseType, alt, symbol)
 #define __FN_DEF_OPERATOR_DIVIDE_3_4(base, baseType, alt) __FN_DEF_OPERATOR_DIVIDE_3_3(base, baseType, alt)
@@ -255,9 +355,7 @@ base base::Normal() const                                                 \
 base& base::Normalize()                                                   \
 {                                                                         \
   float mag = Magnitude();                                                \
-  x /= mag;                                                               \
-  y /= mag;                                                               \
-  z /= mag;                                                               \
+  *this /= mag;                                                           \
   return *this;                                                           \
 }                                                                         \
 inline bool base::operator==(const base& other) const                     \
@@ -303,26 +401,70 @@ inline base Cross(const base& left, const base& right)                    \
 
 // Arithmetic operators
 
-#define __FN_DEF_OPERATOR_ARITHMETIC_4_1(base, baseType, alt, symbol)                                                                                                                          \
-inline base  base::operator symbol (const alt& other) const { return base{ x symbol (baseType)other, y symbol (baseType)other, z symbol (baseType)other, w symbol (baseType)other }; }         \
-inline base& base::operator symbol##= (const alt& other) { x symbol##= (baseType)other; y symbol##= (baseType)other; z symbol##= (baseType)other; w symbol##= (baseType)other; return *this; } \
+#define __FN_DEF_OPERATOR_ARITHMETIC_4_1(base, baseType, alt, symbol)                                                    \
+inline base  base::operator symbol (const alt& other) const                                                              \
+{                                                                                                                        \
+  return base{ x symbol (baseType)other, y symbol (baseType)other, z symbol (baseType)other, w symbol (baseType)other }; \
+}                                                                                                                        \
+inline base& base::operator symbol##= (const alt& other)                                                                 \
+{                                                                                                                        \
+  x symbol##= (baseType)other;                                                                                           \
+  y symbol##= (baseType)other;                                                                                           \
+  z symbol##= (baseType)other;                                                                                           \
+  w symbol##= (baseType)other;                                                                                           \
+  return *this;                                                                                                          \
+}
 
-#define __FN_DEF_OPERATOR_DIVIDE_4_1(base, baseType, alt)                                                                                                                    \
-inline base  base::operator / (const alt& other) const { assert(other); return base{ x / (baseType)other, y / (baseType)other, z / (baseType)other, w / (baseType)other }; } \
-inline base& base::operator /= (const alt& other) { assert(other); x /= (baseType)other; y /= (baseType)other; z /= (baseType)other; w /= (baseType)other; return *this; }
+#define __FN_DEF_OPERATOR_DIVIDE_4_1(base, baseType, alt)                                            \
+inline base  base::operator / (const alt& other) const                                               \
+{                                                                                                    \
+  assert(other && "Divide by zero");                                                                 \
+  return base{ x / (baseType)other, y / (baseType)other, z / (baseType)other, w / (baseType)other }; \
+}                                                                                                    \
+inline base& base::operator /= (const alt& other)                                                    \
+{                                                                                                    \
+  assert(other && "Divide by zero");                                                                 \
+  x /= (baseType)other;                                                                              \
+  y /= (baseType)other;                                                                              \
+  z /= (baseType)other;                                                                              \
+  w /= (baseType)other;                                                                              \
+  return *this;                                                                                      \
+}
 
 #define __FN_DEF_OPERATOR_ARITHMETIC_4_2(base, baseType, alt, symbol) __FN_DEF_OPERATOR_ARITHMETIC_2_2(base, baseType, alt, symbol)
 #define __FN_DEF_OPERATOR_ARITHMETIC_4_3(base, baseType, alt, symbol) __FN_DEF_OPERATOR_ARITHMETIC_3_3(base, baseType, alt, symbol)
 #define __FN_DEF_OPERATOR_DIVIDE_4_2(base, baseType, alt) __FN_DEF_OPERATOR_DIVIDE_2_2(base, baseType, alt)
 #define __FN_DEF_OPERATOR_DIVIDE_4_3(base, baseType, alt) __FN_DEF_OPERATOR_DIVIDE_3_3(base, baseType, alt)
 
-#define __FN_DEF_OPERATOR_ARITHMETIC_4_4(base, baseType, alt, symbol)                                                                                                                                  \
-inline base  base::operator symbol (const alt& other) const { return base{ x symbol (baseType)other.x, y symbol (baseType)other.y, z symbol (baseType)other.z, w symbol (baseType)other.w }; }         \
-inline base& base::operator symbol##= (const alt& other) { x symbol##= (baseType)other.x; y symbol##= (baseType)other.y; z symbol##= (baseType)other.z; w symbol##= (baseType)other.w; return *this; }
+#define __FN_DEF_OPERATOR_ARITHMETIC_4_4(base, baseType, alt, symbol)                                                            \
+inline base  base::operator symbol (const alt& other) const                                                                      \
+{                                                                                                                                \
+  return base{ x symbol (baseType)other.x, y symbol (baseType)other.y, z symbol (baseType)other.z, w symbol (baseType)other.w }; \
+}                                                                                                                                \
+inline base& base::operator symbol##= (const alt& other)                                                                         \
+{                                                                                                                                \
+  x symbol##= (baseType)other.x;                                                                                                 \
+  y symbol##= (baseType)other.y;                                                                                                 \
+  z symbol##= (baseType)other.z;                                                                                                 \
+  w symbol##= (baseType)other.w;                                                                                                 \
+  return *this;                                                                                                                  \
+}
 
-#define __FN_DEF_OPERATOR_DIVIDE_4_4(base, baseType, alt)                                                                                                                                                               \
-inline base  base::operator / (const alt& other) const { assert(other.x && other.y && other.z && other.w); return base{ x / (baseType)other.x, y / (baseType)other.y, z / (baseType)other.z, w / (baseType)other.w }; } \
-inline base& base::operator /= (const alt& other) { assert(other.x && other.y && other.z && other.w); x /= (baseType)other.x; y /= (baseType)other.y; z /= (baseType)other.z; w /= (baseType)other.w; return *this; }
+#define __FN_DEF_OPERATOR_DIVIDE_4_4(base, baseType, alt)                                                    \
+inline base  base::operator / (const alt& other) const                                                       \
+{                                                                                                            \
+  assert(other.x && other.y && other.z && other.w && "Divide by zero");                                      \
+  return base{ x / (baseType)other.x, y / (baseType)other.y, z / (baseType)other.z, w / (baseType)other.w }; \
+}                                                                                                            \
+inline base& base::operator /= (const alt& other)                                                            \
+{                                                                                                            \
+  assert(other.x && other.y && other.z && other.w && "Divide by zero");                                      \
+  x /= (baseType)other.x;                                                                                    \
+  y /= (baseType)other.y;                                                                                    \
+  z /= (baseType)other.z;                                                                                    \
+  w /= (baseType)other.w;                                                                                    \
+  return *this;                                                                                              \
+}
 
 
 // Common
@@ -344,10 +486,7 @@ base base::Normal() const                                                       
 base& base::Normalize()                                                                      \
 {                                                                                            \
   float mag = Magnitude();                                                                   \
-  x /= mag;                                                                                  \
-  y /= mag;                                                                                  \
-  z /= mag;                                                                                  \
-  w /= mag;                                                                                  \
+  *this /= mag;                                                                              \
   return *this;                                                                              \
 }                                                                                            \
 inline bool base::operator==(const base& other) const                                        \
@@ -462,6 +601,8 @@ __FN_DEF_VEC(Vec4U, unsigned int, 4);
 #undef __FN_DEF_VEC
 
 
-
+#ifndef PERIDOT_NO_NAMESPACE
+} // namespace Pdt
+#endif // !PERIDOT_NO_NAMESPACE
 #endif // PERIDOT_C
 #endif // !GEM_PERIDOT_VECTOR_HPP_

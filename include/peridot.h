@@ -2,6 +2,12 @@
 #ifndef GEM_PERIDOT_H_
 #define GEM_PERIDOT_H_
 
+// Forces the use of Peridot's C-style functionality. Automatically defined if "__cplusplus" is undefined
+//#define PERIDOT_C
+
+// Removes "Ptd" namespace from C++ functionality. Does nothing if "PERIDOT_C" is defined
+//#define PERIDOT_NO_NAMESPACE
+
 #include "peridot_defines.h"
 
 #define PeriMin(a, b) ((a < b) ? a : b)

@@ -6,6 +6,10 @@
 
 #ifndef PERIDOT_C
 
+#ifndef PERIDOT_NO_NAMESPACE
+namespace Pdt {
+#endif // !PERIDOT_NO_NAMESPACE
+
 #include "peridot_vector.hpp"
 #include "peridot_matrix.hpp"
 
@@ -159,7 +163,11 @@ private:
   }
 };
 
+// #if defined __cplusplus && !defined PERIDOT_C
 #define QuaternionIdentity Quaternion{ 0.0f, 0.0f, 0.0f, 1.0f }
 
+#ifndef PERIDOT_NO_NAMESPACE
+} // namespace Pdt
+#endif // !PERIDOT_NO_NAMESPACE
 #endif // !PERIDOT_C
 #endif // !GEM_PERIDOT_QUATERNION_HPP_

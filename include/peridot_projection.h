@@ -12,6 +12,10 @@
 #include "peridot_vector.hpp"
 #include "peridot_matrix.hpp"
 #include "peridot_quaternion.hpp"
+
+#ifndef PERIDOT_NO_NAMESPACE
+namespace Pdt {
+#endif // !PERIDOT_NO_NAMESPACE
 #endif // PERIDOT_C
 
 inline Mat4 ProjectionPerspective(float _screenRatio, float _fovY, float _near, float _far)
@@ -65,5 +69,9 @@ inline Mat4 ProjectionOrthographic(float _width, float _height, float _near, flo
 
   return newMat;
 }
+
+#if !defined PERIDOT_C && !defined PERIDOT_NO_NAMESPACE
+} // namespace Pdt
+#endif // !PERIDOT_C && !PERIDOT_NO_NAMESPACE
 
 #endif // !GEM_PERIDOT_PROJECTION_H_

@@ -329,12 +329,30 @@ inline Mat4 Mat4Invert(Mat4 _matrix)
     return newMat;
 }
 
+#ifdef __cplusplus
 #define Mat4Identity Mat4{ \
   1.0f, 0.0f, 0.0f, 0.0f,  \
   0.0f, 1.0f, 0.0f, 0.0f,  \
   0.0f, 0.0f, 1.0f, 0.0f,  \
   0.0f, 0.0f, 0.0f, 1.0f   \
 }
+#else
+#ifdef __clang__
+#define Mat4Identity (Mat4){ \
+  1.0f, 0.0f, 0.0f, 0.0f,  \
+  0.0f, 1.0f, 0.0f, 0.0f,  \
+  0.0f, 0.0f, 1.0f, 0.0f,  \
+  0.0f, 0.0f, 0.0f, 1.0f   \
+}
+#else
+#define Mat4Identity { \
+  1.0f, 0.0f, 0.0f, 0.0f,  \
+  0.0f, 1.0f, 0.0f, 0.0f,  \
+  0.0f, 0.0f, 1.0f, 0.0f,  \
+  0.0f, 0.0f, 0.0f, 1.0f   \
+}
+#endif // __clang__
+#endif // __cplusplus
 
 #endif // PERIDOT_C
 #endif // !GEM_PERIDOT_MATRIX_H_

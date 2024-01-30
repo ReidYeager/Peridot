@@ -123,7 +123,30 @@ inline Vec3 QuaternionMultiplyVec3(Quaternion _quaternion, Vec3 _vector)
   return Mat4MultiplyVec3(qMat, _vector);
 }
 
-#define QuaternionIdentity Quaternion{ 0.0f, 0.0f, 0.0f, 1.0f }
+#ifdef __cplusplus
+#define Mat4Identity Mat4{ \
+  1.0f, 0.0f, 0.0f, 0.0f,  \
+  0.0f, 1.0f, 0.0f, 0.0f,  \
+  0.0f, 0.0f, 1.0f, 0.0f,  \
+  0.0f, 0.0f, 0.0f, 1.0f   \
+}
+#else
+#ifdef __clang__
+#define Mat4Identity (Mat4){ \
+  1.0f, 0.0f, 0.0f, 0.0f,  \
+  0.0f, 1.0f, 0.0f, 0.0f,  \
+  0.0f, 0.0f, 1.0f, 0.0f,  \
+  0.0f, 0.0f, 0.0f, 1.0f   \
+}
+#else
+#define Mat4Identity { \
+  1.0f, 0.0f, 0.0f, 0.0f,  \
+  0.0f, 1.0f, 0.0f, 0.0f,  \
+  0.0f, 0.0f, 1.0f, 0.0f,  \
+  0.0f, 0.0f, 0.0f, 1.0f   \
+}
+#endif // __clang__
+#endif // __cplusplus
 
 #endif // PERIDOT_C
 #endif // !GEM_PERIDOT_QUATERNION_H_

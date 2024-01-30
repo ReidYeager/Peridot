@@ -33,7 +33,15 @@ inline Mat4 TransformToMat4(Transform _transform)
   return newMat;
 }
 
+#ifdef __cplusplus
 #define TransformIdentity Transform{ { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } }
+#else
+#ifdef __clang__
+#define TransformIdentity (Transform){ { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } }
+#else
+#define TransformIdentity { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } }
+#endif // __clang__
+#endif // __cplusplus
 
 #endif // PERIDOT_C
 #endif // !GEM_PERIDOT_TRANSFORM_H_
