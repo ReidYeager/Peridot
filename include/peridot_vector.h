@@ -137,13 +137,23 @@ PERI_DEF_VECTOR_OPERATIONS_22(base, basePrim, alt, altType)
 PERI_DEF_VECTOR_OPERATIONS_22(base, basePrim, alt, altType)
 
 #define PERI_DEF_OPERATIONS_2(base)                        \
+inline float base##MagnitudeSquared(base _a)               \
+{                                                          \
+  return (float)((_a.x * _a.x) + (_a.y * _a.y));           \
+}                                                          \
 inline float base##Magnitude(base _a)                      \
 {                                                          \
   return (float)sqrt((_a.x * _a.x) + (_a.y * _a.y));       \
 }                                                          \
 inline base base##Normalize(base _a)                       \
 {                                                          \
-  return base##DivideFloat(_a, base##Magnitude(_a));       \
+  float mag = base##MagnitudeSquared(_a);                  \
+  if (mag == 0)                                            \
+  {                                                        \
+    return _a;                                             \
+  }                                                        \
+  mag = sqrt(mag);                                         \
+  return base##DivideFloat(_a, mag);                       \
 }                                                          \
 inline float base##Dot(base _a, base _b)                   \
 {                                                          \
@@ -272,13 +282,23 @@ inline base base##Divide##alt(base _a, altType _b)                  \
 PERI_DEF_VECTOR_OPERATIONS_33(base, basePrim, alt, altType)
 
 #define PERI_DEF_OPERATIONS_3(base)                                  \
+inline float base##MagnitudeSquared(base _a)                         \
+{                                                                    \
+  return (float)((_a.x * _a.x) + (_a.y * _a.y) + (_a.z * _a.z));     \
+}                                                                    \
 inline float base##Magnitude(base _a)                                \
 {                                                                    \
   return (float)sqrt((_a.x * _a.x) + (_a.y * _a.y) + (_a.z * _a.z)); \
 }                                                                    \
 inline base base##Normalize(base _a)                                 \
 {                                                                    \
-  return base##DivideFloat(_a, base##Magnitude(_a));                 \
+  float mag = base##MagnitudeSquared(_a);                            \
+  if (mag == 0)                                                      \
+  {                                                                  \
+    return _a;                                                       \
+  }                                                                  \
+  mag = sqrt(mag);                                                   \
+  return base##DivideFloat(_a, mag);                                 \
 }                                                                    \
 inline float base##Dot(base _a, base _b)                             \
 {                                                                    \
@@ -474,13 +494,23 @@ inline base base##Divide##alt(base _a, altType _b)                  \
 }
 
 #define PERI_DEF_OPERATIONS_4(base)                                                  \
+inline float base##MagnitudeSquared(base _a)                                         \
+{                                                                                    \
+  return (float)((_a.x * _a.x) + (_a.y * _a.y) + (_a.z * _a.z) + (_a.w * _a.w));     \
+}                                                                                    \
 inline float base##Magnitude(base _a)                                                \
 {                                                                                    \
   return (float)sqrt((_a.x * _a.x) + (_a.y * _a.y) + (_a.z * _a.z) + (_a.w * _a.w)); \
 }                                                                                    \
 inline base base##Normalize(base _a)                                                 \
 {                                                                                    \
-  return base##DivideFloat(_a, base##Magnitude(_a));                                 \
+  float mag = base##MagnitudeSquared(_a);                                            \
+  if (mag == 0)                                                                      \
+  {                                                                                  \
+    return _a;                                                                       \
+  }                                                                                  \
+  mag = sqrt(mag);                                                                   \
+  return base##DivideFloat(_a, mag);                                                 \
 }                                                                                    \
 inline float base##Dot(base _a, base _b)                                             \
 {                                                                                    \

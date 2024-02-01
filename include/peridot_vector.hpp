@@ -46,6 +46,7 @@ __FN_DEC_OPERATORS(base, baseType, Vec2U)        \
 __FN_DEC_OPERATORS(base, baseType, Vec3U)        \
 __FN_DEC_OPERATORS(base, baseType, Vec4U)        \
 inline base operator -() const;                  \
+inline float MagnitudeSquared() const;           \
 inline float Magnitude() const;                  \
 inline base Normal() const;                      \
 inline base& Normalize();
@@ -67,8 +68,8 @@ public:                                                               \
   Vec2##suffix(Vec2##suffix& other) : x(other.x), y(other.y) {}       \
   Vec2##suffix(const Vec2##suffix& other) : x(other.x), y(other.y) {} \
   __FN_DEC_COMMON(Vec2##suffix, baseType)                             \
-  inline bool operator==(const Vec2##suffix& other) const;             \
-  inline float Dot(const Vec2##suffix& other) const;                   \
+  inline bool operator==(const Vec2##suffix& other) const;            \
+  inline float Dot(const Vec2##suffix& other) const;                  \
 };
 
 #define __DEF_VEC_3(baseType, suffix)                                                \
@@ -115,8 +116,8 @@ public:                                                                         
   Vec4##suffix(Vec4##suffix& other) : x(other.x), y(other.y), z(other.z), w(other.w) {}                    \
   Vec4##suffix(const Vec4##suffix& other) : x(other.x), y(other.y), z(other.z), w(other.w) {}              \
   __FN_DEC_COMMON(Vec4##suffix, baseType)                                                                  \
-  inline bool operator==(const Vec4##suffix& other) const;                                                  \
-  inline float Dot(const Vec4##suffix& other) const;                                                        \
+  inline bool operator==(const Vec4##suffix& other) const;                                                 \
+  inline float Dot(const Vec4##suffix& other) const;                                                       \
 };
 
 __DEF_VEC_2(float,)
@@ -241,19 +242,27 @@ base base::operator -() const                          \
 {                                                      \
   return base{ -x, -y };                               \
 }                                                      \
+float base::MagnitudeSquared() const                   \
+{                                                      \
+  return (float)((x * x) + (y * y));                   \
+}                                                      \
 float base::Magnitude() const                          \
 {                                                      \
   return (float)sqrt((x * x) + (y * y));               \
 }                                                      \
 base base::Normal() const                              \
 {                                                      \
-  float mag = Magnitude();                             \
+  float mag = MagnitudeSquared();                      \
+  if (mag == 0)                                        \
+  {                                                    \
+    return *this;                                      \
+  }                                                    \
+  mag = sqrt(mag);                                     \
   return base{ (baseType)(x/mag), (baseType)(y/mag) }; \
 }                                                      \
 base& base::Normalize()                                \
 {                                                      \
-  float mag = Magnitude();                             \
-  *this /= mag;                                        \
+  *this = this->Normal();                              \
   return *this;                                        \
 }                                                      \
 inline bool base::operator==(const base& other) const  \
@@ -343,19 +352,27 @@ base base::operator -() const                                             \
 {                                                                         \
   return base{ -x, -y, -z };                                              \
 }                                                                         \
+float base::MagnitudeSquared() const                                      \
+{                                                                         \
+  return (float)((x * x) + (y * y) + (z * z));                            \
+}                                                                         \
 float base::Magnitude() const                                             \
 {                                                                         \
   return (float)sqrt((x * x) + (y * y) + (z * z));                        \
 }                                                                         \
 base base::Normal() const                                                 \
 {                                                                         \
-  float mag = Magnitude();                                                \
+  float mag = MagnitudeSquared();                                         \
+  if (mag == 0)                                                           \
+  {                                                                       \
+    return *this;                                                         \
+  }                                                                       \
+  mag = sqrt(mag);                                                        \
   return base{ (baseType)(x/mag), (baseType)(y/mag), (baseType)(z/mag) }; \
 }                                                                         \
 base& base::Normalize()                                                   \
 {                                                                         \
-  float mag = Magnitude();                                                \
-  *this /= mag;                                                           \
+  *this = this->Normal();                                                 \
   return *this;                                                           \
 }                                                                         \
 inline bool base::operator==(const base& other) const                     \
@@ -474,19 +491,27 @@ inline base base::operator -() const                                            
 {                                                                                            \
   return base{ -x, -y, -z, -w };                                                             \
 }                                                                                            \
+float base::MagnitudeSquared() const                                                         \
+{                                                                                            \
+  return (float)((x * x) + (y * y) + (z * z) + (w * w));                                     \
+}                                                                                            \
 float base::Magnitude() const                                                                \
 {                                                                                            \
   return (float)sqrt((x * x) + (y * y) + (z * z) + (w * w));                                 \
 }                                                                                            \
 base base::Normal() const                                                                    \
 {                                                                                            \
-  float mag = Magnitude();                                                                   \
+  float mag = MagnitudeSquared();                                                            \
+  if (mag == 0)                                                                              \
+  {                                                                                          \
+    return *this;                                                                            \
+  }                                                                                          \
+  mag = sqrt(mag);                                                                           \
   return base{ (baseType)(x/mag), (baseType)(y/mag), (baseType)(z/mag), (baseType)(w/mag) }; \
 }                                                                                            \
 base& base::Normalize()                                                                      \
 {                                                                                            \
-  float mag = Magnitude();                                                                   \
-  *this /= mag;                                                                              \
+  *this = this->Normal();                                                                    \
   return *this;                                                                              \
 }                                                                                            \
 inline bool base::operator==(const base& other) const                                        \
