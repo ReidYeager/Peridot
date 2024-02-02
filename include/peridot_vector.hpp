@@ -273,7 +273,7 @@ inline float base::Dot(const base& other) const        \
 {                                                      \
   return float((x * other.x) + (y * other.y));         \
 }                                                      \
-float Dot(const base& left, const base& right)         \
+inline float Dot(const base& left, const base& right)  \
 {                                                      \
   return left.Dot(right);                              \
 }
@@ -401,7 +401,7 @@ inline base base::Project(const base& other) const                        \
   base p = other.Normal();                                                \
   return p * Dot(other);                                                  \
 }                                                                         \
-float Dot(const base& left, const base& right)                            \
+inline float Dot(const base& left, const base& right)                     \
 {                                                                         \
   return left.Dot(right);                                                 \
 }                                                                         \
@@ -522,7 +522,7 @@ inline float base::Dot(const base& other) const                                 
 {                                                                                            \
   return float((x * other.x) + (y * other.y) + (z * other.z) + (w * other.w));               \
 }                                                                                            \
-float Dot(const base& left, const base& right)                                               \
+inline float Dot(const base& left, const base& right)                                        \
 {                                                                                            \
   return left.Dot(right);                                                                    \
 }
