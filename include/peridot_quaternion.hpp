@@ -143,23 +143,82 @@ public:
     };
   }
 
+  // TODO : understand this page https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9648712/
   //inline Vec3 Euler() const
   //{
-  //  return Vec3 { 0.0f, 0.0f, 0.0f };
+  //  Vec3 out;
+  //  return out;
   //}
+
+  static Quaternion LookAt(Vec3 origin, Vec3 target, Vec3 up = Vec3{ 0.0f, 1.0f, 0.0f })
+  {
+    // TODO : Return here and actually absorb what is happening for a rewrite
+    // Taken from Glm (quatLookAtRH(...))
+
+    Vec3 direction = (target - origin).Normal();
+
+    Vec3 col2 = -direction;
+
+    Vec3 right = Cross(up, col2);
+    Vec3 col0 = right * (1.0f / sqrt(PeriMax(0.00001, right.Dot(right))));
+    Vec3 col1 = Cross(col2, col0);
+
+    float fourXSquaredMinus1 = col0.x - col1.y - col2.z;
+    float fourYSquaredMinus1 = col1.y - col0.x - col2.z;
+    float fourZSquaredMinus1 = col2.z - col0.x - col1.y;
+    float fourWSquaredMinus1 = col0.x + col1.y + col2.z;
+
+    int biggestIndex = 3;
+    float fourBiggestSquaredMinus1 = fourWSquaredMinus1;
+
+    if (fourXSquaredMinus1 > fourBiggestSquaredMinus1)
+    {
+      fourBiggestSquaredMinus1 = fourXSquaredMinus1;
+      biggestIndex = 0;
+    }
+    if (fourYSquaredMinus1 > fourBiggestSquaredMinus1)
+    {
+      fourBiggestSquaredMinus1 = fourYSquaredMinus1;
+      biggestIndex = 1;
+    }
+    if (fourZSquaredMinus1 > fourBiggestSquaredMinus1)
+    {
+      fourBiggestSquaredMinus1 = fourZSquaredMinus1;
+      biggestIndex = 2;
+    }
+
+    float biggestValue = sqrt(fourBiggestSquaredMinus1 + 1) * 0.5;
+    float mult = 0.25 / biggestValue;
+
+    switch (biggestIndex)
+    {
+    case 0:  return Quaternion{ biggestValue            , (col0.y + col1.x) * mult, (col2.x + col0.z) * mult, (col1.z - col2.y) * mult };
+    case 1:  return Quaternion{ (col0.y + col1.x) * mult, biggestValue            , (col1.z + col2.y) * mult, (col2.x - col0.z) * mult };
+    case 2:  return Quaternion{ (col2.x + col0.z) * mult, (col1.z + col2.y) * mult, biggestValue            , (col0.y - col1.x) * mult };
+    case 3:  return Quaternion{ (col1.z - col2.y) * mult, (col2.x - col0.z) * mult, (col0.y - col1.x) * mult, biggestValue             };
+    default: return Quaternion{ 0.0f, 0.0f, 0.0f, 1.0f };
+    }
+  }
 
 
 private:
-  void FromEuler(const Vec3& angles)
+  void FromEuler(Vec3 euler)
   {
-    Vec3 euler(angles);
-    euler *= 0.008726646f;
+    euler *= 0.008726646; // (Degrees to radians) * 0.5
 
-    Quaternion yaw = { 0.0f, (float)sin(euler.y), 0.0f, (float)cos(euler.y) };
-    Quaternion pitch = { (float)sin(euler.x), 0.0f, 0.0f, (float)cos(euler.x) };
-    Quaternion roll = { 0.0f, 0.0f, (float)sin(euler.z), (float)cos(euler.z) };
+    float sp = sin(euler.x); // sin-pitch
+    float cp = cos(euler.x); // cos-pitch
+    float sy = sin(euler.y); // sin-yaw
+    float cy = cos(euler.y); // cos-yaw
+    float sr = sin(euler.z); // sin-roll
+    float cr = cos(euler.z); // cos-roll
 
-    vec = (yaw * pitch * roll).Normal().vec;
+    vec = Vec4{
+      cy*sp*cr + sy*cp*sr,
+      sy*cp*cr - cy*sp*sr,
+      cy*cp*sr - sy*sp*cr,
+      cy*cp*cr + sy*sp*sr
+    };
   }
 };
 
